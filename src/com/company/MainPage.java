@@ -70,9 +70,10 @@ public class MainPage extends JFrame implements ActionListener {
 
     class q2 implements ActionListener{
         JLabel lb;
-        JTextField tf1;
+        JTextArea tf1;
         JButton search;
         JButton reset;
+        JPanel jp;
 
         public q2(){
             preparegui();
@@ -80,14 +81,21 @@ public class MainPage extends JFrame implements ActionListener {
 
         public void preparegui(){
             setLayout(null);
+            jp = new JPanel();
             lb = new JLabel("No of publications");
-            tf1 = new JTextField();
+            tf1 = new JTextArea();
             search = new JButton("Search");
             reset = new JButton("Reset");
-            add(lb);
-            add(tf1);
-            add(search);
-            add(reset);
+            add(jp);
+            jp.setLayout(null);
+            jp.add(lb);
+            jp.add(tf1);
+            jp.add(search);
+            jp.add(reset);
+            reset.setBounds(300,400,50,50);
+            lb.setBounds(100,100,100,100);
+            tf1.setBounds(200,200,200,200);
+            search.setBounds(300,300,50,50);
             search.setEnabled(true);
             reset.setEnabled(true);
             search.setActionCommand("search");
