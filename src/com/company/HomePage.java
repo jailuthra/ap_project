@@ -118,7 +118,7 @@ public class HomePage extends JFrame implements ActionListener {
         q1p4 = new JPanel();
         q1p5 = new JPanel();
         q1p6 = new JPanel();
-        q1p7 = new JPanel();        
+        q1p7 = new JPanel();
         q1p1.add(q1choiceBox);
         q1p2.add(q1lb1);q1p2.add(q1jt1);
         q1p3.add(q1lb2);q1p3.add(q1jt2);
