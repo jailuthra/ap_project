@@ -18,6 +18,10 @@ class Author implements Serializable {
         this.names.add(name);
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     public String toString() {
         String out = key + " ";
         for (int i = 0; i < names.size(); i++) {
@@ -30,7 +34,7 @@ class Author implements Serializable {
         return out;
     }
 
-    public static void serialWriteList(ArrayList<Author> alist, String fname) {
+    public static void serialWrite(HashMap<String, Author> alist, String fname) {
         try {
             FileOutputStream fos = new FileOutputStream(fname);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -43,12 +47,12 @@ class Author implements Serializable {
     }
 
     @SuppressWarnings("unchecked")
-    public static ArrayList<Author> serialReadList(String fname) {
-        ArrayList<Author> out = new ArrayList<>();
+    public static HashMap<String, Author> serialRead(String fname) {
+        HashMap<String, Author> out = new HashMap<>();
         try {
             FileInputStream fis = new FileInputStream(fname);
             ObjectInputStream ois = new ObjectInputStream(fis);
-            out = (ArrayList) ois.readObject();
+            out = (HashMap) ois.readObject();
             ois.close();
             fis.close();
         } catch(IOException ioe){
