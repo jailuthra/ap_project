@@ -55,7 +55,11 @@ class Q1Parser extends DefaultHandler {
             } else if (qName.equals("title")) {
                 pub.title = content;
                 if (this.queryType == 'T') {
-                    //getSimilarity(tags, title);
+                    int sim = pub.getSimilarity(tags);
+                    if (sim >= 2) {
+                        Q1Parser.result.add(pub);
+                        pub.relevance = sim;
+                    }
                 }
             } else if (qName.equals("year")) {
                 pub.year = Integer.valueOf(content);
