@@ -95,7 +95,7 @@ public class HomePage extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null,"Enter Author/Title name");
                 }
                 else if(q1input2.equals("") && q1input3.equals("") && q1input4.equals("")){
-                    q1results = engine.query1(q1input1); 
+                    q1results = engine.query1A(q1input1); 
                     System.out.println("Recieved results: "  + q1results.size());
                     updateTable(dataset, 0);
                 }

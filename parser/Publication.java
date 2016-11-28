@@ -60,7 +60,7 @@ class Publication {
 
     private static class YearComparator implements Comparator<Publication> {
         public int compare(Publication o1, Publication o2) {
-            return (o1.year > o2.year) ? 1 : ((o2.year < o1.year) ? -1 : 0);
+            return o1.year - o2.year;
         }
 
         public boolean equals(Publication o1, Publication o2) {
@@ -70,7 +70,7 @@ class Publication {
 
     private static class RelevanceComparator implements Comparator<Publication> {
         public int compare(Publication o1, Publication o2) {
-            return (o1.relevance > o2.relevance) ? 1 : ((o2.relevance < o1.relevance) ? -1 : 0);
+            return o1.relevance - o2.relevance;
         }
 
         public boolean equals(Publication o1, Publication o2) {
