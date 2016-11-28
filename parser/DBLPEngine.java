@@ -28,11 +28,11 @@ class DBLPEngine {
     
     public static void main(String[] args) {
         DBLPEngine engine = new DBLPEngine();
-        //for (Publication pub: engine.query1A("Alexander Weber")) {
-            //System.out.println(pub + " by " + pub.getAuthors());
-        //}
-        for (Publication pub: engine.query1B("finite state machines")) {
+        for (Publication pub: engine.query1A("Alexander Weber")) {
             System.out.println(pub + " by " + pub.getAuthors());
         }
+        //for (Publication pub: engine.query1B("finite state machines")) {
+            //System.out.println(pub + " by " + pub.getAuthors());
+        //}
     }
 }

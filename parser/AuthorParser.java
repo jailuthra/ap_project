@@ -17,9 +17,9 @@ class AuthorParser extends DefaultHandler {
         //Author.serialWrite(authors, "authors.db");
         //System.out.println(Author.serialRead("authors.db"));
         //System.out.println("Authors: " + authors.size());
-        //for (String author: authors.keySet()) {
-            //System.out.println(authors.get(author).getName());
-        //}
+        for (String author: authors.keySet()) {
+            System.out.println(authors.get(author).getName());
+        }
     }
 
     public void startElement(String uri, String localName,
@@ -58,9 +58,10 @@ class AuthorParser extends DefaultHandler {
         SAXParserFactory spf = SAXParserFactory.newInstance();
         spf.setNamespaceAware(true);
         SAXParser saxParser = spf.newSAXParser();
-        XMLReader xmlReader = saxParser.getXMLReader();
-        xmlReader.setContentHandler(new AuthorParser());
-        xmlReader.parse("file://" + fname);
+        InputSource is = new InputSource(new InputStreamReader(
+                    new FileInputStream(new File(fname)), "UTF-8"));
+        is.setEncoding("UTF-8");
+        saxParser.parse(is, new AuthorParser());
         return authors;
     }
 }

@@ -55,7 +55,7 @@ class Q1Parser extends DefaultHandler {
             } else if (qName.equals("title")) {
                 pub.title = content;
                 if (this.queryType == 'T') {
-                    System.out.println("ello");
+                    //getSimilarity(tags, title);
                 }
             } else if (qName.equals("year")) {
                 pub.year = Integer.valueOf(content);
@@ -99,9 +99,10 @@ class Q1Parser extends DefaultHandler {
             SAXParserFactory spf = SAXParserFactory.newInstance();
             spf.setNamespaceAware(true);
             SAXParser saxParser = spf.newSAXParser();
-            XMLReader xmlReader = saxParser.getXMLReader();
-            xmlReader.setContentHandler(new Q1Parser(tags, authors));
-            xmlReader.parse("file://" + fname);
+            InputSource is = new InputSource(new InputStreamReader(
+                        new FileInputStream(new File(fname)), "UTF-8"));
+            is.setEncoding("UTF-8");
+            saxParser.parse(is, new Q1Parser(tags, authors));
             return result;
         } catch (Exception e) {
             e.printStackTrace();
@@ -121,9 +122,10 @@ class Q1Parser extends DefaultHandler {
             SAXParserFactory spf = SAXParserFactory.newInstance();
             spf.setNamespaceAware(true);
             SAXParser saxParser = spf.newSAXParser();
-            XMLReader xmlReader = saxParser.getXMLReader();
-            xmlReader.setContentHandler(new Q1Parser(author, authors));
-            xmlReader.parse("file://" + fname);
+            InputSource is = new InputSource(new InputStreamReader(
+                        new FileInputStream(new File(fname)), "UTF-8"));
+            is.setEncoding("UTF-8");
+            saxParser.parse(is, new Q1Parser(author, authors));
             return result;
         } catch (Exception e) {
             e.printStackTrace();
