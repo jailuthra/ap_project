@@ -32,24 +32,27 @@ public class HomePage extends JFrame implements ActionListener {
     ButtonGroup q1bg1;
     JPanel q1p1,q1p2,q1p3,q1p4,q1p5,q1p6,q1p7;
 
+
     JLabel q2lb;
     JTextField q2tarea;
     JButton q2search;
     JButton q2reset;
     JPanel q2p1;
-
     JPanel q2p2;
+
+
     JLabel q3lb1,q3lb2,q3lb3,q3lb4,q3lb5,q3lb6;
     JTextField q3tf1,q3tf2,q3tf3,q3tf4,q3tf5,q3tf6;
     JButton q3search;
     JButton q3reset;
-
     JPanel q3p1,q3p2,q3p3,q3p4,q3p5,q3p6,q3p7;
 
 
     class q1 implements ActionListener{
 
-
+        public q1(){
+            
+        }
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
@@ -83,9 +86,26 @@ public class HomePage extends JFrame implements ActionListener {
 
     class q3 implements ActionListener{
         public q3(){
+            q3search.setActionCommand("search");
+            q3search.addActionListener(this);
+            q3search.setEnabled(true);
+            q3reset.setActionCommand("reset");
+            q3reset.addActionListener(this);
+            q3reset.setEnabled(true);
         }
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
+            if("search".equals(actionEvent.getActionCommand())){
+                //code here
+            }
+            else if("reset".equals(actionEvent.getActionCommand())){
+                q3tf1.setText("");
+                q3tf2.setText("");
+                q3tf3.setText("");
+                q3tf4.setText("");
+                q3tf5.setText("");
+                q3tf6.setText("");
+            }
 
         }
     }

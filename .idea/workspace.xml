@@ -2,17 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="32b8aa80-5ca6-47fd-9edb-b6574e05e7b5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/parser/Author.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/parser/AuthorParser.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/parser/DBLPEngine.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/parser/Publication.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/parser/Q1AParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ap_project_2/com/company/HomePage$q1.class" afterPath="$PROJECT_DIR$/out/production/ap_project_2/com/company/HomePage$q1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ap_project_2/com/company/HomePage$q2.class" afterPath="$PROJECT_DIR$/out/production/ap_project_2/com/company/HomePage$q2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ap_project_2/com/company/HomePage$q3.class" afterPath="$PROJECT_DIR$/out/production/ap_project_2/com/company/HomePage$q3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ap_project_2/com/company/HomePage.class" afterPath="$PROJECT_DIR$/out/production/ap_project_2/com/company/HomePage.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/company/HomePage.java" afterPath="$PROJECT_DIR$/src/com/company/HomePage.java" />
     </list>
     <ignored path="ap_project_2.iws" />
@@ -49,12 +38,12 @@
       <file leaf-file-name="HomePage.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/company/HomePage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="22" column="17" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
+            <state relative-caret-position="378">
+              <caret line="53" column="12" selection-start-line="53" selection-start-column="12" selection-end-line="53" selection-end-column="12" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#9275#9276#0" expanded="true" />
-                <element signature="e#9318#9319#0" expanded="true" />
+                <element signature="e#9983#9984#0" expanded="true" />
+                <element signature="e#10026#10027#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -600,12 +589,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/company/HomePage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="22" column="17" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
+        <state relative-caret-position="378">
+          <caret line="53" column="12" selection-start-line="53" selection-start-column="12" selection-end-line="53" selection-end-column="12" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#9275#9276#0" expanded="true" />
-            <element signature="e#9318#9319#0" expanded="true" />
+            <element signature="e#9983#9984#0" expanded="true" />
+            <element signature="e#10026#10027#0" expanded="true" />
           </folding>
         </state>
       </provider>
