@@ -379,7 +379,7 @@ public class HomePage extends JFrame implements ActionListener {
         add(jp);
         choiceBox = new JComboBox(choices);
         left = new JPanel();
-        left.setPreferredSize(new Dimension(300,300));
+        left.setPreferredSize(new Dimension(300,200));
         left.setLayout(new BoxLayout(left,BoxLayout.Y_AXIS));
         right = new JPanel();
         first = new JPanel();
@@ -406,7 +406,7 @@ public class HomePage extends JFrame implements ActionListener {
         right.add(dataset1);
         right.add(dataset2);
         right.add(dataset3);
-        right.add(dataset4);
+        right.add(dataset4,BorderLayout.SOUTH);
         jp.add(left);
         jp.add(right);
         setVisible(true);
