@@ -67,7 +67,74 @@ public class HomePage extends JFrame implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             if("search".equals(actionEvent.getActionCommand())){
-                //search checks here
+                q1input1 = q1jt1.getText();
+                q1input2 = q1jt2.getText();
+                q1input3 = q1jt3.getText();
+                q1input4 = q1jt4.getText();
+                // do checks here
+                if(q1input1.equals("")){
+                    JOptionPane.showMessageDialog(null,"Enter Author/Title name");
+                }
+                else if(!q1input1.matches("[0-9]+") || !q1input1.contains("[a-zA-Z]+")){
+                    JOptionPane.showMessageDialog(null,"Enter valid input");
+                    q1jt1.setText("");
+                }
+                else if(q1input2.equals("") && q1input3.equals("") && q1input4.equals("")){
+                    //run code;
+                }
+                else if(!q1input2.equals("") && !q1input3.equals("") && !q1input4.equals("")){
+                    JOptionPane.showMessageDialog(null,"Invalid input format");
+                    q1jt2.setText("");
+                    q1jt3.setText("");
+                    q1jt4.setText("");
+                }
+                else if(!q1input2.equals("") && q1input3.equals("") && q1input4.equals("")){
+                    if(!q1input2.matches("[0-9]+")){
+                        JOptionPane.showMessageDialog(null,"Enter valid input");
+                        q1jt2.setText("");
+                        q1jt3.setText("");
+                        q1jt4.setText("");
+
+                    }
+                    else {
+                        //run code;
+                    }
+                }
+                else if(!q1input2.equals("") && !q1input3.equals("") && q1input4.equals("")){
+                    JOptionPane.showMessageDialog(null,"Invalid input format");
+                    q1jt2.setText("");
+                    q1jt3.setText("");
+                    q1jt4.setText("");
+                }
+                else if(!q1input2.equals("") && q1input3.equals("") && !q1input4.equals("")){
+                    JOptionPane.showMessageDialog(null,"Invalid input format");
+                    q1jt2.setText("");
+                    q1jt3.setText("");
+                    q1jt4.setText("");
+                }
+                else if(q1input2.equals("") && !q1input3.equals("") && q1input4.equals("")){
+                    JOptionPane.showMessageDialog(null,"Enter proper range");
+                    q1jt2.setText("");
+                    q1jt3.setText("");
+                    q1jt4.setText("");
+                }
+                else if(q1input2.equals("") && q1input3.equals("") && !q1input4.equals("")){
+                    JOptionPane.showMessageDialog(null,"Enter proper range");
+                    q1jt2.setText("");
+                    q1jt3.setText("");
+                    q1jt4.setText("");
+                }
+                else if(q1input2.equals("") && !q1input3.equals("") && !q1input4.equals("")){
+                    if(!q1input3.matches("[0-9]+") || !q1input4.matches("[0-9]+")){
+                        JOptionPane.showMessageDialog(null,"Enter valid input");
+                        q1jt2.setText("");
+                        q1jt3.setText("");
+                        q1jt4.setText("");
+                    }
+                    else{
+                        //run code
+                    }
+                }
             }
             else if("reset".equals(actionEvent.getActionCommand())){
                 q1jt1.setText("");
@@ -102,6 +169,7 @@ public class HomePage extends JFrame implements ActionListener {
                 }
                 else if(!q2input.matches("[0-9]+")){
                     JOptionPane.showMessageDialog(null,"Enter numeric input");
+                    q2tarea.setText("");
                 }
                 else{
                     JOptionPane.showMessageDialog(null,"Works");
@@ -138,9 +206,16 @@ public class HomePage extends JFrame implements ActionListener {
                 }
                 else if(!q3input1.matches("[0-9]+")){
                     JOptionPane.showMessageDialog(null,"Enter numeric input");
+                    q3tf1.setText("");
                 }
                 else if(!q3input1.matches("[0-9]+") || !q3input1.contains("[a-zA-Z]+") || !q3input1.matches("[0-9]+") || !q3input1.contains("[a-zA-Z]+") || !q3input1.matches("[0-9]+") || !q3input1.contains("[a-zA-Z]+") || !q3input1.matches("[0-9]+") || !q3input1.contains("[a-zA-Z]+") || !q3input1.matches("[0-9]+") || !q3input1.contains("[a-zA-Z]+")){
                     JOptionPane.showMessageDialog(null,"Enter valid input");
+                    q3tf1.setText("");
+                    q3tf2.setText("");
+                    q3tf3.setText("");
+                    q3tf4.setText("");
+                    q3tf5.setText("");
+                    q3tf6.setText("");
                 }
                 else {
                     JOptionPane.showMessageDialog(null,"Works");
@@ -263,7 +338,7 @@ public class HomePage extends JFrame implements ActionListener {
 
     public void preparegui(){
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setSize(800,500);
+        setSize(800,550);
         jp = new JPanel();
         next = new JButton("Next");
         Heading = new JLabel("DBLP Query Engine",SwingConstants.CENTER);
