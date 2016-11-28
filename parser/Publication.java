@@ -22,6 +22,15 @@ class Publication {
         this.authors = new ArrayList<>();
     }
 
+    public void setRelevance(String content, String authorToSearch) {
+        if (content.equals(authorToSearch)) {
+            this.relevance += 2;
+        } else if (content.startsWith(authorToSearch + " ")) {
+            this.relevance += 1;
+        }
+    }
+
+
     public String toString() {
         return relevance + " " + title + " " + year + " ";
     }

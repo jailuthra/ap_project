@@ -15,7 +15,7 @@ class DBLPEngine {
         if (authorMap == null) {
             this.loadAuthors();
         }
-        return Q1AParser.query(author, authorMap);
+        return Q1Parser.queryA(author, authorMap);
     }
 
     public static void main(String[] args) {

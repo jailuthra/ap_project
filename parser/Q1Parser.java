@@ -5,17 +5,25 @@ import org.xml.sax.helpers.*;
 import java.util.*;
 import java.io.*;
 
-class Q1AParser extends DefaultHandler {
+class Q1Parser extends DefaultHandler {
     private String authorToSearch;
+    private ArrayList<String> tags;
     private ArrayList<String> relevant;
     private String content;
     private Publication pub = null;
     private HashMap<String, Author> authors;
+    private char queryType;
     private static ArrayList<Publication> result = new ArrayList<>();
 
-    private Q1AParser(String author, HashMap<String, Author> authors) {
+    private Q1Parser(String author, HashMap<String, Author> authors) {
+        queryType = 'A';
         this.authorToSearch = author;
         this.authors = authors;
+    }
+
+    private Q1Parser(ArrayList<String> title_tags) {
+        queryType = 'T';
+        this.tags = title_tags;
     }
 
     public void startDocument() throws SAXException {
@@ -52,15 +60,12 @@ class Q1AParser extends DefaultHandler {
                 pub.url = content;
             } else if (qName.equals("author")) {
                 pub.authors.add(content);
-                for (String relevantAuthor: this.relevant) {
-                    if (content.equals(relevantAuthor)) {
-                        Q1AParser.result.add(pub);
-                        if (content.equals(authorToSearch)) {
-                            pub.relevance += 2;
-                        } else if (content.startsWith(authorToSearch + " ")) {
-                            pub.relevance += 1;
+                if (this.queryType == 'A') {
+                    for (String relevantAuthor: this.relevant) {
+                        if (content.equals(relevantAuthor)) {
+                            Q1Parser.result.add(pub);
+                            pub.setRelevance(content, authorToSearch);
                         }
-
                     }
                 }
             }
@@ -76,7 +81,7 @@ class Q1AParser extends DefaultHandler {
 	}
 
     public static ArrayList<Publication>
-        query(String author, HashMap<String, Author> authors)
+        queryA(String author, HashMap<String, Author> authors)
     {
         try {
             result = new ArrayList<>();
@@ -85,7 +90,7 @@ class Q1AParser extends DefaultHandler {
             spf.setNamespaceAware(true);
             SAXParser saxParser = spf.newSAXParser();
             XMLReader xmlReader = saxParser.getXMLReader();
-            xmlReader.setContentHandler(new Q1AParser(author, authors));
+            xmlReader.setContentHandler(new Q1Parser(author, authors));
             xmlReader.parse("file://" + fname);
             return result;
         } catch (Exception e) {
