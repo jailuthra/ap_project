@@ -21,13 +21,16 @@ class Q1Parser extends DefaultHandler {
         this.authors = authors;
     }
 
-    private Q1Parser(ArrayList<String> title_tags) {
+    private Q1Parser(ArrayList<String> tags, HashMap<String, Author> authors) {
         queryType = 'T';
-        this.tags = title_tags;
+        this.tags = tags;
+        this.authors = authors;
     }
 
     public void startDocument() throws SAXException {
-        relevant = this.relevantAuthors(authorToSearch);
+        if (queryType == 'A') {
+            relevant = this.relevantAuthors(authorToSearch);
+        }
     }
 
     public void endDocument() throws SAXException {
@@ -43,6 +46,7 @@ class Q1Parser extends DefaultHandler {
         }
     }
 
+    /* TODO: Add Author object instead of String in publication */
     public void endElement(String uri, String localName,
                            String qName) throws SAXException {
         if (pub != null) {
@@ -50,6 +54,9 @@ class Q1Parser extends DefaultHandler {
                 pub.pages = content;
             } else if (qName.equals("title")) {
                 pub.title = content;
+                if (this.queryType == 'T') {
+                    System.out.println("ello");
+                }
             } else if (qName.equals("year")) {
                 pub.year = Integer.valueOf(content);
             } else if (qName.equals("volume")) {
@@ -81,10 +88,35 @@ class Q1Parser extends DefaultHandler {
 	}
 
     public static ArrayList<Publication>
+        queryB(ArrayList<String> tags, HashMap<String, Author> authors)
+    {
+        try {
+            result = new ArrayList<>();
+            if (tags.size() == 0) {
+                throw new Exception("Empty search");
+            }
+            String fname = "/Users/darkapex/misc/dblp.xml";
+            SAXParserFactory spf = SAXParserFactory.newInstance();
+            spf.setNamespaceAware(true);
+            SAXParser saxParser = spf.newSAXParser();
+            XMLReader xmlReader = saxParser.getXMLReader();
+            xmlReader.setContentHandler(new Q1Parser(tags, authors));
+            xmlReader.parse("file://" + fname);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public static ArrayList<Publication>
         queryA(String author, HashMap<String, Author> authors)
     {
         try {
             result = new ArrayList<>();
+            if (author.equals("")) {
+                throw new Exception("Empty search");
+            }
             String fname = "/Users/darkapex/misc/dblp.xml";
             SAXParserFactory spf = SAXParserFactory.newInstance();
             spf.setNamespaceAware(true);

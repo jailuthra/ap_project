@@ -23,9 +23,10 @@ class Publication {
     }
 
     public void setRelevance(String content, String authorToSearch) {
-        if (content.equals(authorToSearch)) {
+        if (content.equalsIgnoreCase(authorToSearch)) {
             this.relevance += 2;
-        } else if (content.startsWith(authorToSearch + " ")) {
+        } else if (content.toLowerCase().startsWith(
+                    authorToSearch.toLowerCase() + " ")) {
             this.relevance += 1;
         }
     }
