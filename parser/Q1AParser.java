@@ -7,11 +7,11 @@ import java.io.*;
 
 class Q1AParser extends DefaultHandler {
     private String authorToSearch;
+    private ArrayList<String> relevant;
     private String content;
     private Publication pub = null;
     private HashMap<String, Author> authors;
     private static ArrayList<Publication> result = new ArrayList<>();
-    private int count = 0;
 
     private Q1AParser(String author, HashMap<String, Author> authors) {
         this.authorToSearch = author;
@@ -19,10 +19,10 @@ class Q1AParser extends DefaultHandler {
     }
 
     public void startDocument() throws SAXException {
+        relevant = this.relevantAuthors(authorToSearch);
     }
 
     public void endDocument() throws SAXException {
-        System.out.println(count);
     }
 
     public void startElement(String uri, String localName,
@@ -52,13 +52,20 @@ class Q1AParser extends DefaultHandler {
                 pub.url = content;
             } else if (qName.equals("author")) {
                 pub.authors.add(content);
-                if (content.contains(this.authorToSearch)) {
-                    Q1AParser.result.add(pub);
+                for (String relevantAuthor: this.relevant) {
+                    if (content.equals(relevantAuthor)) {
+                        Q1AParser.result.add(pub);
+                        if (content.equals(authorToSearch)) {
+                            pub.relevance += 2;
+                        } else if (content.startsWith(authorToSearch + " ")) {
+                            pub.relevance += 1;
+                        }
+
+                    }
                 }
             }
             
             if (qName.equals(pub.type)) {
-                count += 1;
                 pub = null;
             }
         }
@@ -68,7 +75,6 @@ class Q1AParser extends DefaultHandler {
 	    this.content = new String(ch, start, length);
 	}
 
-    //public static void main(String[] args) throws Exception {
     public static ArrayList<Publication>
         query(String author, HashMap<String, Author> authors)
     {
@@ -86,5 +92,16 @@ class Q1AParser extends DefaultHandler {
             e.printStackTrace();
             return new ArrayList<>();
         }
+    }
+
+    private ArrayList<String> relevantAuthors(String author) {
+        ArrayList<String> ret = new ArrayList<>();
+        for (String a: authors.keySet()) {
+            if (a != null && a.contains(author)) {
+                //System.out.println(a);
+                ret.addAll(authors.get(a).getNames());
+            }
+        }
+        return ret;
     }
 }

@@ -10,6 +10,11 @@ class Publication {
     public String volume; 
     public String journal_book;
     public String url;
+    public int relevance = 0;
+
+    public String getAuthors() {
+        return authors.toString().replace("[", "").replace("]", "");
+    }
 
     public Publication(String type, String key) {
         this.type = type;
@@ -18,6 +23,6 @@ class Publication {
     }
 
     public String toString() {
-        return type + ": " + title + " " + year + " ";
+        return relevance + " " + title + " " + year + " ";
     }
 }

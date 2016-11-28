@@ -20,6 +20,8 @@ class DBLPEngine {
 
     public static void main(String[] args) {
         DBLPEngine engine = new DBLPEngine();
-        System.out.println(engine.query1("Juha Honkala"));
+        for (Publication pub: engine.query1("Alexander Weber")) {
+            System.out.println(pub + " by " + pub.getAuthors());
+        }
     }
 }

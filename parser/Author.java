@@ -4,7 +4,7 @@ import java.io.*;
 class Author implements Serializable {
     private String name;
     private String key;
-    ArrayList<String> names;
+    private ArrayList<String> names;
 
     public Author(String key) {
         this.key = key;
@@ -20,6 +20,10 @@ class Author implements Serializable {
 
     public String getName() {
         return this.name;
+    }
+
+    public ArrayList<String> getNames() {
+        return this.names;
     }
 
     public String toString() {
