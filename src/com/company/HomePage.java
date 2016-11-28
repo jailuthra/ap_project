@@ -69,6 +69,88 @@ public class HomePage extends JFrame implements ActionListener {
             q1reset.addActionListener(this);
         }
 
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            if("search".equals(actionEvent.getActionCommand())){
+                q1input1 = q1jt1.getText();
+                q1input2 = q1jt2.getText();
+                q1input3 = q1jt3.getText();
+                q1input4 = q1jt4.getText();
+                // do checks here
+                if(q1input1.equals("")){
+                    JOptionPane.showMessageDialog(null,"Enter Author/Title name");
+                }
+                else if(!q1input1.matches("[0-9]+") || !q1input1.contains("[a-zA-Z]+")){
+                    JOptionPane.showMessageDialog(null,"Enter valid input");
+                    q1jt1.setText("");
+                }
+                else if(q1input2.equals("") && q1input3.equals("") && q1input4.equals("")){
+                    //run code;
+                }
+                else if(!q1input2.equals("") && !q1input3.equals("") && !q1input4.equals("")){
+                    JOptionPane.showMessageDialog(null,"Invalid input format");
+                    q1jt2.setText("");
+                    q1jt3.setText("");
+                    q1jt4.setText("");
+                }
+                else if(!q1input2.equals("") && q1input3.equals("") && q1input4.equals("")){
+                    if(!q1input2.matches("[0-9]+")){
+                        JOptionPane.showMessageDialog(null,"Enter valid input");
+                        q1jt2.setText("");
+                        q1jt3.setText("");
+                        q1jt4.setText("");
+
+                    }
+                    else {
+                        //run code;
+                    }
+                }
+                else if(!q1input2.equals("") && !q1input3.equals("") && q1input4.equals("")){
+                    JOptionPane.showMessageDialog(null,"Invalid input format");
+                    q1jt2.setText("");
+                    q1jt3.setText("");
+                    q1jt4.setText("");
+                }
+                else if(!q1input2.equals("") && q1input3.equals("") && !q1input4.equals("")){
+                    JOptionPane.showMessageDialog(null,"Invalid input format");
+                    q1jt2.setText("");
+                    q1jt3.setText("");
+                    q1jt4.setText("");
+                }
+                else if(q1input2.equals("") && !q1input3.equals("") && q1input4.equals("")){
+                    JOptionPane.showMessageDialog(null,"Enter proper range");
+                    q1jt2.setText("");
+                    q1jt3.setText("");
+                    q1jt4.setText("");
+                }
+                else if(q1input2.equals("") && q1input3.equals("") && !q1input4.equals("")){
+                    JOptionPane.showMessageDialog(null,"Enter proper range");
+                    q1jt2.setText("");
+                    q1jt3.setText("");
+                    q1jt4.setText("");
+                }
+                else if(q1input2.equals("") && !q1input3.equals("") && !q1input4.equals("")){
+                    if(!q1input3.matches("[0-9]+") || !q1input4.matches("[0-9]+")){
+                        JOptionPane.showMessageDialog(null,"Enter valid input");
+                        q1jt2.setText("");
+                        q1jt3.setText("");
+                        q1jt4.setText("");
+                    }
+                    else{
+                        //run code
+                    }
+                }
+            }
+            else if("reset".equals(actionEvent.getActionCommand())){
+                q1jt1.setText("");
+                q1jt2.setText("");
+                q1jt3.setText("");
+                q1jt4.setText("");
+                q1rb1.setSelected(false);
+                q1rb2.setSelected(false);
+                q1bg1.clearSelection();
+            }
+        }
     }
 
     class q2 implements ActionListener{
