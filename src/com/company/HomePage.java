@@ -56,6 +56,11 @@ public class HomePage extends JFrame implements ActionListener {
     class q1 implements ActionListener{
 
         public q1(){
+            q1jt1.setText("");
+            q1jt2.setText("");
+            q1jt3.setText("");
+            q1jt4.setText("");
+            q1bg1.clearSelection();
             q1search.setActionCommand("search");
             q1search.setEnabled(true);
             q1search.addActionListener(this);
@@ -152,6 +157,7 @@ public class HomePage extends JFrame implements ActionListener {
 
 
         public q2(){
+            q2tarea.setText("");
             q2search.setActionCommand("search");
             q2search.addActionListener(this);
             q2search.setEnabled(true);
@@ -185,6 +191,12 @@ public class HomePage extends JFrame implements ActionListener {
 
     class q3 implements ActionListener{
         public q3(){
+            q3tf1.setText("");
+            q3tf2.setText("");
+            q3tf3.setText("");
+            q3tf4.setText("");
+            q3tf5.setText("");
+            q3tf6.setText("");
             q3search.setActionCommand("search");
             q3search.addActionListener(this);
             q3search.setEnabled(true);
@@ -203,6 +215,12 @@ public class HomePage extends JFrame implements ActionListener {
                 q3input6 = q3tf6.getText();
                 if(q3input1.equals("") || q3input2.equals("") || q3input3.equals("") || q3input4.equals("") || q3input5.equals("") || q3input6.equals("")){
                     JOptionPane.showMessageDialog(null,"Input cannot be empty");
+                    q3tf1.setText("");
+                    q3tf2.setText("");
+                    q3tf3.setText("");
+                    q3tf4.setText("");
+                    q3tf5.setText("");
+                    q3tf6.setText("");
                 }
                 else if(!q3input1.matches("[0-9]+")){
                     JOptionPane.showMessageDialog(null,"Enter numeric input");
