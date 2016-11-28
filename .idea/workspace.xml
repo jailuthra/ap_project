@@ -38,12 +38,12 @@
       <file leaf-file-name="HomePage.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/company/HomePage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="53" column="12" selection-start-line="53" selection-start-column="12" selection-end-line="53" selection-end-column="12" />
+            <state relative-caret-position="204">
+              <caret line="35" column="47" selection-start-line="35" selection-start-column="47" selection-end-line="35" selection-end-column="47" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#9983#9984#0" expanded="true" />
-                <element signature="e#10026#10027#0" expanded="true" />
+                <element signature="e#12639#12640#0" expanded="true" />
+                <element signature="e#12682#12683#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -589,12 +589,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/company/HomePage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="53" column="12" selection-start-line="53" selection-start-column="12" selection-end-line="53" selection-end-column="12" />
+        <state relative-caret-position="204">
+          <caret line="35" column="47" selection-start-line="35" selection-start-column="47" selection-end-line="35" selection-end-column="47" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#9983#9984#0" expanded="true" />
-            <element signature="e#10026#10027#0" expanded="true" />
+            <element signature="e#12639#12640#0" expanded="true" />
+            <element signature="e#12682#12683#0" expanded="true" />
           </folding>
         </state>
       </provider>

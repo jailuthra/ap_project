@@ -1,5 +1,7 @@
 package com.company;
 
+import jdk.nashorn.internal.scripts.JO;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -31,6 +33,7 @@ public class HomePage extends JFrame implements ActionListener {
     JRadioButton q1rb1,q1rb2;
     ButtonGroup q1bg1;
     JPanel q1p1,q1p2,q1p3,q1p4,q1p5,q1p6,q1p7;
+    String q1input1,q1input2,q1input3,q1input4;
 
 
     JLabel q2lb;
@@ -39,6 +42,7 @@ public class HomePage extends JFrame implements ActionListener {
     JButton q2reset;
     JPanel q2p1;
     JPanel q2p2;
+    String q2input;
 
 
     JLabel q3lb1,q3lb2,q3lb3,q3lb4,q3lb5,q3lb6;
@@ -46,17 +50,34 @@ public class HomePage extends JFrame implements ActionListener {
     JButton q3search;
     JButton q3reset;
     JPanel q3p1,q3p2,q3p3,q3p4,q3p5,q3p6,q3p7;
+    String q3input1,q3input2,q3input3,q3input4,q3input5,q3input6;
 
 
     class q1 implements ActionListener{
 
         public q1(){
-            
+            q1search.setActionCommand("search");
+            q1search.setEnabled(true);
+            q1search.addActionListener(this);
+            q1reset.setActionCommand("reset");
+            q1reset.setEnabled(true);
+            q1reset.addActionListener(this);
         }
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-
+            if("search".equals(actionEvent.getActionCommand())){
+                //search checks here
+            }
+            else if("reset".equals(actionEvent.getActionCommand())){
+                q1jt1.setText("");
+                q1jt2.setText("");
+                q1jt3.setText("");
+                q1jt4.setText("");
+                q1rb1.setSelected(false);
+                q1rb2.setSelected(false);
+                q1bg1.clearSelection();
+            }
         }
     }
 
@@ -75,7 +96,17 @@ public class HomePage extends JFrame implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             if("search".equals(actionEvent.getActionCommand())){
-                //code here
+                q2input = q2tarea.getText();
+                if(q2input.equals("")){
+                    JOptionPane.showMessageDialog(null,"Enter number of Publications");
+                }
+                else if(!q2input.matches("[0-9]+")){
+                    JOptionPane.showMessageDialog(null,"Enter numeric input");
+                }
+                else{
+                    JOptionPane.showMessageDialog(null,"Works");
+                    //enter code here
+                }
             }
             else if("reset".equals(actionEvent.getActionCommand())){
                 q2tarea.setText("");
@@ -96,7 +127,25 @@ public class HomePage extends JFrame implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             if("search".equals(actionEvent.getActionCommand())){
-                //code here
+                q3input1 = q3tf1.getText();
+                q3input2 = q3tf2.getText();
+                q3input3 = q3tf3.getText();
+                q3input4 = q3tf4.getText();
+                q3input5 = q3tf5.getText();
+                q3input6 = q3tf6.getText();
+                if(q3input1.equals("") || q3input2.equals("") || q3input3.equals("") || q3input4.equals("") || q3input5.equals("") || q3input6.equals("")){
+                    JOptionPane.showMessageDialog(null,"Input cannot be empty");
+                }
+                else if(!q3input1.matches("[0-9]+")){
+                    JOptionPane.showMessageDialog(null,"Enter numeric input");
+                }
+                else if(!q3input1.matches("[0-9]+") || !q3input1.contains("[a-zA-Z]+") || !q3input1.matches("[0-9]+") || !q3input1.contains("[a-zA-Z]+") || !q3input1.matches("[0-9]+") || !q3input1.contains("[a-zA-Z]+") || !q3input1.matches("[0-9]+") || !q3input1.contains("[a-zA-Z]+") || !q3input1.matches("[0-9]+") || !q3input1.contains("[a-zA-Z]+")){
+                    JOptionPane.showMessageDialog(null,"Enter valid input");
+                }
+                else {
+                    JOptionPane.showMessageDialog(null,"Works");
+                    //enter code here
+                }
             }
             else if("reset".equals(actionEvent.getActionCommand())){
                 q3tf1.setText("");
@@ -132,6 +181,7 @@ public class HomePage extends JFrame implements ActionListener {
         q1rb2 = new JRadioButton("Sort by Relevance");
         q1search = new JButton("Search");
         q1reset = new JButton("Reset");
+        q1bg1 = new ButtonGroup();
         q1p1 = new JPanel();
         q1p2 = new JPanel();
         q1p3 = new JPanel();
@@ -145,6 +195,7 @@ public class HomePage extends JFrame implements ActionListener {
         q1p4.add(q1lb3);q1p4.add(q1jt3);q1p4.add(q1jt4);
         q1p5.add(q1rb1);
         q1p6.add(q1rb2);
+        q1bg1.add(q1rb1);q1bg1.add(q1rb2);
         q1p7.add(q1search);q1p7.add(q1reset);
         left.add(q1p1);q1p1.setVisible(false);
         left.add(q1p2);q1p2.setVisible(false);
