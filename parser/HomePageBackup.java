@@ -3,24 +3,22 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
 
 /**
  * Created by vasu on 28/11/16.
  */
 public class HomePage extends JFrame implements ActionListener {
 
+    DBLPEngine engine;
+
     JLabel Heading;
     JPanel jp;
     JPanel left;
     JPanel right;
     int numRows = 20;
-    String[] q1colHeadings = {"Serial No","Authors","Title","Pages","Year","Volume","Journal/Book Title","url"};
-    JTable q1dataset;
-    String[] q2colHeadings = {"Authors"};
-    JTable q2dataset;
-    String[] q3colHeadings = {"Author","Prediction"};
-    JTable q3dataset;
-    JPanel dataset1,dataset2,dataset3,dataset4;
+    String[] colHeadings = {"Serial No","Authors","Title","Pages","Year","Volume","Journal/Book Title","url"};
+    JTable dataset;
     JComboBox choiceBox;
     String[] choices = {"Query 1","Query 2","Query 3"};
     JPanel first;
@@ -55,6 +53,7 @@ public class HomePage extends JFrame implements ActionListener {
 
 
     class q1 implements ActionListener{
+        private ArrayList<Publication> q1results;
 
         public q1(){
             q1jt1.setText("");
@@ -62,10 +61,6 @@ public class HomePage extends JFrame implements ActionListener {
             q1jt3.setText("");
             q1jt4.setText("");
             q1bg1.clearSelection();
-            q1rb1.addActionListener(this);
-            q1rb2.addActionListener(this);
-            q1choiceBox.setActionCommand("q1choiceBox");
-            q1choiceBox.addActionListener(this);
             q1search.setActionCommand("search");
             q1search.setEnabled(true);
             q1search.addActionListener(this);
@@ -74,24 +69,35 @@ public class HomePage extends JFrame implements ActionListener {
             q1reset.addActionListener(this);
         }
 
+        private void updateTable(JTable table, int start) {
+            for (int row = start; row < start + 20 && row < q1results.size(); row++) {
+                Publication pub = q1results.get(row);
+                table.setValueAt(row + 1, row, 0);
+                table.setValueAt(pub.getAuthors(), row, 1);
+                table.setValueAt(pub.title, row, 2);
+                table.setValueAt(pub.pages, row, 3);
+                table.setValueAt(pub.year, row, 4);
+                table.setValueAt(pub.volume, row, 5);
+                table.setValueAt(pub.journal_book, row, 6);
+                table.setValueAt(pub.url, row, 7);
+            }
+        }
+
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            System.out.println();
             if("search".equals(actionEvent.getActionCommand())){
-                System.out.println("search");
                 q1input1 = q1jt1.getText();
                 q1input2 = q1jt2.getText();
                 q1input3 = q1jt3.getText();
                 q1input4 = q1jt4.getText();
+                // do checks here
                 if(q1input1.equals("")){
                     JOptionPane.showMessageDialog(null,"Enter Author/Title name");
                 }
-                else if(!q1input1.matches("[0-9]+") || !q1input1.contains("[a-zA-Z]+")){
-                    JOptionPane.showMessageDialog(null,"Enter valid input");
-                    q1jt1.setText("");
-                }
                 else if(q1input2.equals("") && q1input3.equals("") && q1input4.equals("")){
-                    //run code;
+                    q1results = engine.query1A(q1input1); 
+                    System.out.println("Recieved results: "  + q1results.size());
+                    updateTable(dataset, 0);
                 }
                 else if(!q1input2.equals("") && !q1input3.equals("") && !q1input4.equals("")){
                     JOptionPane.showMessageDialog(null,"Invalid input format");
@@ -148,7 +154,6 @@ public class HomePage extends JFrame implements ActionListener {
                 }
             }
             else if("reset".equals(actionEvent.getActionCommand())){
-                System.out.println("reset");
                 q1jt1.setText("");
                 q1jt2.setText("");
                 q1jt3.setText("");
@@ -262,12 +267,14 @@ public class HomePage extends JFrame implements ActionListener {
 
 
     public HomePage(){
+        this.engine = new DBLPEngine();
         preparegui();
         preparegui1();
         preparegui2();
         preparegui3();
     }
 
+    @SuppressWarnings("unchecked")
     public void preparegui1(){
         q1choiceBox = new JComboBox(choices2);
         q1lb1 = new JLabel("Name/Title tags");
@@ -361,13 +368,10 @@ public class HomePage extends JFrame implements ActionListener {
         left.add(q3p7);q3p7.setVisible(false);
     }
 
+    @SuppressWarnings("unchecked")
     public void preparegui(){
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(800,550);
-        dataset1 = new JPanel();
-        dataset2 = new JPanel();
-        dataset3 = new JPanel();
-        dataset4 = new JPanel();
         jp = new JPanel();
         next = new JButton("Next");
         Heading = new JLabel("DBLP Query Engine",SwingConstants.CENTER);
@@ -375,36 +379,21 @@ public class HomePage extends JFrame implements ActionListener {
         add(jp);
         choiceBox = new JComboBox(choices);
         left = new JPanel();
-        left.setPreferredSize(new Dimension(300,200));
+        left.setPreferredSize(new Dimension(300,300));
         left.setLayout(new BoxLayout(left,BoxLayout.Y_AXIS));
         right = new JPanel();
         first = new JPanel();
         jp.setLayout(new BoxLayout(jp,BoxLayout.X_AXIS));
-        DefaultTableModel model1 = new DefaultTableModel(numRows,q1colHeadings.length);
-        model1.setColumnIdentifiers(q1colHeadings);
-        q1dataset = new JTable(model1);
-        DefaultTableModel model2 = new DefaultTableModel(numRows,q2colHeadings.length);
-        model2.setColumnIdentifiers(q2colHeadings);
-        q2dataset = new JTable(model2);
-        DefaultTableModel model3 = new DefaultTableModel(numRows,q3colHeadings.length);
-        model3.setColumnIdentifiers(q3colHeadings);
-        q3dataset = new JTable(model3);
-        q1dataset.getColumnModel().getColumn(1).setPreferredWidth(250);
-        q1dataset.getColumnModel().getColumn(2).setPreferredWidth(250);
+        DefaultTableModel model = new DefaultTableModel(numRows,colHeadings.length);
+        model.setColumnIdentifiers(colHeadings);
+        dataset = new JTable(model);
         choiceBox.setActionCommand("choiceBox");
         choiceBox.addActionListener(this);
+
         first.add(choiceBox);
         left.add(first);
-        dataset1.add(new JScrollPane(q1dataset),BorderLayout.CENTER);
-        dataset2.add(new JScrollPane(q2dataset),BorderLayout.CENTER);
-        dataset3.add(new JScrollPane(q3dataset),BorderLayout.CENTER);
-        dataset4.add(next);
-        dataset2.setVisible(false);
-        dataset3.setVisible(false);
-        right.add(dataset1);
-        right.add(dataset2);
-        right.add(dataset3);
-        right.add(dataset4,BorderLayout.SOUTH);
+        right.add(new JScrollPane(dataset),BorderLayout.CENTER);
+        right.add(next);
         jp.add(left);
         jp.add(right);
         setVisible(true);
@@ -415,6 +404,7 @@ public class HomePage extends JFrame implements ActionListener {
         String s = (String) choiceBox.getSelectedItem();
         switch(s) {
             case "Query 1": {
+                System.out.println("1");
                 q1p1.setVisible(true);
                 q1p2.setVisible(true);
                 q1p3.setVisible(true);
@@ -431,13 +421,11 @@ public class HomePage extends JFrame implements ActionListener {
                 q3p5.setVisible(false);
                 q3p6.setVisible(false);
                 q3p7.setVisible(false);
-                dataset1.setVisible(true);
-                dataset2.setVisible(false);
-                dataset3.setVisible(false);
                 HomePage.q1 q11 = new HomePage.q1();
                 break;
             }
             case "Query 2":
+                System.out.println("2");
                 q1p1.setVisible(false);
                 q1p2.setVisible(false);
                 q1p3.setVisible(false);
@@ -454,12 +442,10 @@ public class HomePage extends JFrame implements ActionListener {
                 q3p5.setVisible(false);
                 q3p6.setVisible(false);
                 q3p7.setVisible(false);
-                dataset1.setVisible(false);
-                dataset2.setVisible(true);
-                dataset3.setVisible(false);
                 HomePage.q2 q22 = new HomePage.q2();
                 break;
             case "Query 3":
+                System.out.println("3");
                 q1p1.setVisible(false);
                 q1p2.setVisible(false);
                 q1p3.setVisible(false);
@@ -476,9 +462,6 @@ public class HomePage extends JFrame implements ActionListener {
                 q3p5.setVisible(true);
                 q3p6.setVisible(true);
                 q3p7.setVisible(true);
-                dataset1.setVisible(false);
-                dataset2.setVisible(false);
-                dataset3.setVisible(true);
                 HomePage.q3 q33 = new HomePage.q3();
                 break;
         }
