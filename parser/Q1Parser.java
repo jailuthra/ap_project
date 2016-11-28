@@ -62,7 +62,7 @@ class Q1Parser extends DefaultHandler {
                 pub.authors.add(content);
                 if (this.queryType == 'A') {
                     for (String relevantAuthor: this.relevant) {
-                        if (content.equals(relevantAuthor)) {
+                        if (content.equalsIgnoreCase(relevantAuthor)) {
                             Q1Parser.result.add(pub);
                             pub.setRelevance(content, authorToSearch);
                         }

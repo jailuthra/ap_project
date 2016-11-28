@@ -18,10 +18,12 @@ class DBLPEngine {
         return Q1Parser.queryA(author, authorMap);
     }
 
-    public static void main(String[] args) {
+    
+    /*public static void main(String[] args) {
         DBLPEngine engine = new DBLPEngine();
         for (Publication pub: engine.query1("Alexander Weber")) {
             System.out.println(pub + " by " + pub.getAuthors());
         }
-    }
+    }*/
+    
 }
