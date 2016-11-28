@@ -14,8 +14,6 @@ class AuthorParser extends DefaultHandler {
     }
 
     public void endDocument() throws SAXException {
-        //Author.serialWrite(authors, "authors.db");
-        //System.out.println(Author.serialRead("authors.db"));
         //System.out.println("Authors: " + authors.size());
         //for (String author: authors.keySet()) {
             //System.out.println(authors.get(author).getName());
