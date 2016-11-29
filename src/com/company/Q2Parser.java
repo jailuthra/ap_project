@@ -1,3 +1,5 @@
+package com.company;
+
 import javax.xml.parsers.*;
 import org.xml.sax.*;
 import org.xml.sax.helpers.*;
@@ -5,35 +7,20 @@ import org.xml.sax.helpers.*;
 import java.util.*;
 import java.io.*;
 
-class Q1Parser extends DefaultHandler {
-    private String authorToSearch;
-    private ArrayList<String> tags;
+class Q2Parser extends DefaultHandler {
     private ArrayList<String> relevant;
     private Publication pub = null;
     private HashMap<String, Author> authors;
-    private char queryType;
-    private static ArrayList<Publication> result = new ArrayList<>();
 
     private StringBuilder contentBuf = new StringBuilder();
     private boolean bufupdate;
     private String content;
 
-    private Q1Parser(String author, HashMap<String, Author> authors) {
-        queryType = 'A';
-        this.authorToSearch = author;
-        this.authors = authors;
-    }
-
-    private Q1Parser(ArrayList<String> tags, HashMap<String, Author> authors) {
-        queryType = 'T';
-        this.tags = tags;
+    private Q2Parser(HashMap<String, Author> authors) {
         this.authors = authors;
     }
 
     public void startDocument() throws SAXException {
-        if (queryType == 'A') {
-            relevant = this.relevantAuthors(authorToSearch);
-        }
     }
 
     public void endDocument() throws SAXException {
@@ -66,13 +53,6 @@ class Q1Parser extends DefaultHandler {
                 pub.pages = content;
             } else if (qName.equals("title")) {
                 pub.title = content;
-                if (this.queryType == 'T') {
-                    int sim = pub.getSimilarity(tags);
-                    if (sim >= 2) {
-                        Q1Parser.result.add(pub);
-                        pub.relevance = sim;
-                    }
-                }
             } else if (qName.equals("year")) {
                 pub.year = Integer.valueOf(content);
             } else if (qName.equals("volume")) {
@@ -83,13 +63,8 @@ class Q1Parser extends DefaultHandler {
                 pub.url = content;
             } else if (qName.equals("author")) {
                 pub.authors.add(content);
-                if (this.queryType == 'A') {
-                    for (String relevantAuthor: this.relevant) {
-                        if (content.equalsIgnoreCase(relevantAuthor)) {
-                            Q1Parser.result.add(pub);
-                            pub.setRelevance(content, authorToSearch);
-                        }
-                    }
+                if (this.authors.containsKey(content)) {
+                    this.authors.get(content).incrementPubs();
                 }
             }
 
@@ -115,60 +90,37 @@ class Q1Parser extends DefaultHandler {
         }
 	}
 
-    public static ArrayList<Publication>
-        queryB(ArrayList<String> tags, HashMap<String, Author> authors)
-    {
-        try {
-            result = new ArrayList<>();
-            if (tags.size() == 0) {
-                throw new Exception("Empty search");
-            }
-            String fname = "/Users/darkapex/misc/dblp.xml";
-            SAXParserFactory spf = SAXParserFactory.newInstance();
-            spf.setNamespaceAware(true);
-            SAXParser saxParser = spf.newSAXParser();
-            InputSource is = new InputSource(new InputStreamReader(
-                        new FileInputStream(new File(fname)), "UTF-8"));
-            is.setEncoding("UTF-8");
-            saxParser.parse(is, new Q1Parser(tags, authors));
-            return result;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-    }
-
-    public static ArrayList<Publication>
-        queryA(String author, HashMap<String, Author> authors)
-    {
-        try {
-            result = new ArrayList<>();
-            if (author.equals("")) {
-                throw new Exception("Empty search");
-            }
-            String fname = "/Users/darkapex/misc/dblp.xml";
-            SAXParserFactory spf = SAXParserFactory.newInstance();
-            spf.setNamespaceAware(true);
-            SAXParser saxParser = spf.newSAXParser();
-            InputSource is = new InputSource(new InputStreamReader(
-                        new FileInputStream(new File(fname)), "UTF-8"));
-            is.setEncoding("UTF-8");
-            saxParser.parse(is, new Q1Parser(author, authors));
-            return result;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-    }
-
-    private ArrayList<String> relevantAuthors(String author) {
-        ArrayList<String> ret = new ArrayList<>();
-        for (String a: authors.keySet()) {
-            if (a != null && a.contains(author)) {
-                //System.out.println(a);
-                ret.addAll(authors.get(a).getNames());
+    private static ArrayList<Author>
+        computeResult(HashMap<String, Author> authors, int k) {
+        ArrayList<Author> ret = new ArrayList<>();
+        for (Author a: authors.values()) {
+            if (a.pubsMoreThan(k)) {
+                ret.add(a);
             }
         }
         return ret;
+    }
+
+    public static ArrayList<Author>
+        query(int k, HashMap<String, Author> authors)
+    {
+        try {
+            if (!Author.pubs_computed) {
+                String fname = "/Users/darkapex/misc/dblp.xml";
+                SAXParserFactory spf = SAXParserFactory.newInstance();
+                spf.setNamespaceAware(true);
+                SAXParser saxParser = spf.newSAXParser();
+                InputSource is = new InputSource(new InputStreamReader(
+                            new FileInputStream(new File(fname)), "UTF-8"));
+                is.setEncoding("UTF-8");
+                saxParser.parse(is, new Q2Parser(authors));
+                Author.pubs_computed = true;
+            }
+            return Q2Parser.computeResult(authors, k);
+        } catch (Exception e) {
+            Author.pubs_computed = false;
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 }

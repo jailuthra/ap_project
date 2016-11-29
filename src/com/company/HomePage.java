@@ -1,17 +1,19 @@
 package com.company;
 
-import jdk.nashorn.internal.scripts.JO;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
 
 /**
  * Created by vasu on 28/11/16.
  */
 public class HomePage extends JFrame implements ActionListener {
+    DBLPEngine engine;
+
+    int nextValue;
 
     JLabel Heading;
     JPanel jp;
@@ -59,8 +61,10 @@ public class HomePage extends JFrame implements ActionListener {
 
 
     class q1 implements ActionListener{
+        private ArrayList<Publication> q1results;
 
         public q1(){
+            nextValue=0;
             q1jt1.setText("");
             q1jt2.setText("");
             q1jt3.setText("");
@@ -73,37 +77,58 @@ public class HomePage extends JFrame implements ActionListener {
             q1search.setActionCommand("search");
             q1search.setEnabled(true);
             q1search.addActionListener(this);
+            next.setEnabled(true);
+            next.setActionCommand("next");
+            next.addActionListener(this);
             q1reset.setActionCommand("reset");
             q1reset.setEnabled(true);
             q1reset.addActionListener(this);
+        }
+
+        private void updateTable(JTable table, int start) {
+            for (int row = start; row < start + 20 && row < q1results.size(); row++) {
+                Publication pub = q1results.get(row);
+                table.setValueAt(row + 1, row, 0);
+                table.setValueAt(pub.getAuthors(), row, 1);
+                table.setValueAt(pub.title, row, 2);
+                table.setValueAt(pub.pages, row, 3);
+                table.setValueAt(pub.year, row, 4);
+                table.setValueAt(pub.volume, row, 5);
+                table.setValueAt(pub.journal_book, row, 6);
+                table.setValueAt(pub.url, row, 7);
+            }
         }
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             System.out.println();
             if("search".equals(actionEvent.getActionCommand())){
-                System.out.println("search");
                 q1input1 = q1jt1.getText();
                 q1input2 = q1jt2.getText();
                 q1input3 = q1jt3.getText();
                 q1input4 = q1jt4.getText();
+                System.out.println("search " + q1input1);
                 if(q1input1.equals("")){
                     JOptionPane.showMessageDialog(null,"Enter Author/Title name");
                 }
-                else if(!q1input1.matches("[0-9]+") || !q1input1.contains("[a-zA-Z]+")){
-                    JOptionPane.showMessageDialog(null,"Enter valid input");
-                    q1jt1.setText("");
+                else if(!q1input1.equals("") && q1input2.equals("") && q1input3.equals("") && q1input4.equals("")){
+                    if(q1choiceBox.getSelectedIndex()==0){
+                        q1results = engine.query1A(q1input1);
+                        System.out.println("Recieved results: "  + q1results.size());
+                        updateTable(q1dataset, 0);
+                    } else if(q1choiceBox.getSelectedIndex()==1){
+                        q1results = engine.query1B(q1input1);
+                        System.out.println("Received results: " + q1results.size());
+                        updateTable(q1dataset,0);
+                    }
                 }
-                else if(q1input2.equals("") && q1input3.equals("") && q1input4.equals("")){
-                    //run code;
-                }
-                else if(!q1input2.equals("") && !q1input3.equals("") && !q1input4.equals("")){
+                else if(!q1input1.equals("") && !q1input2.equals("") && !q1input3.equals("") && !q1input4.equals("")){
                     JOptionPane.showMessageDialog(null,"Invalid input format");
                     q1jt2.setText("");
                     q1jt3.setText("");
                     q1jt4.setText("");
                 }
-                else if(!q1input2.equals("") && q1input3.equals("") && q1input4.equals("")){
+                else if(!q1input1.equals("") && !q1input2.equals("") && q1input3.equals("") && q1input4.equals("")){
                     if(!q1input2.matches("[0-9]+")){
                         JOptionPane.showMessageDialog(null,"Enter valid input");
                         q1jt2.setText("");
@@ -115,13 +140,13 @@ public class HomePage extends JFrame implements ActionListener {
                         //run code;
                     }
                 }
-                else if(!q1input2.equals("") && !q1input3.equals("") && q1input4.equals("")){
+                else if(!q1input1.equals("") && !q1input2.equals("") && !q1input3.equals("") && q1input4.equals("")){
                     JOptionPane.showMessageDialog(null,"Invalid input format");
                     q1jt2.setText("");
                     q1jt3.setText("");
                     q1jt4.setText("");
                 }
-                else if(!q1input2.equals("") && q1input3.equals("") && !q1input4.equals("")){
+                else if(!q1input1.equals("") && !q1input2.equals("") && q1input3.equals("") && !q1input4.equals("")){
                     JOptionPane.showMessageDialog(null,"Invalid input format");
                     q1jt2.setText("");
                     q1jt3.setText("");
@@ -133,13 +158,13 @@ public class HomePage extends JFrame implements ActionListener {
                     q1jt3.setText("");
                     q1jt4.setText("");
                 }
-                else if(q1input2.equals("") && q1input3.equals("") && !q1input4.equals("")){
+                else if(!q1input1.equals("") && q1input2.equals("") && q1input3.equals("") && !q1input4.equals("")){
                     JOptionPane.showMessageDialog(null,"Enter proper range");
                     q1jt2.setText("");
                     q1jt3.setText("");
                     q1jt4.setText("");
                 }
-                else if(q1input2.equals("") && !q1input3.equals("") && !q1input4.equals("")){
+                else if(!q1input1.equals("") && q1input2.equals("") && !q1input3.equals("") && !q1input4.equals("")){
                     if(!q1input3.matches("[0-9]+") || !q1input4.matches("[0-9]+")){
                         JOptionPane.showMessageDialog(null,"Enter valid input");
                         q1jt2.setText("");
@@ -161,6 +186,15 @@ public class HomePage extends JFrame implements ActionListener {
                 q1rb2.setSelected(false);
                 q1bg1.clearSelection();
             }
+            else if("next".equals(actionEvent.getActionCommand())){
+                for(int i=0;i<q1dataset.getRowCount();i++){
+                    for(int j=0;j<q1dataset.getColumnCount();j++){
+                        q1dataset.setValueAt("",i,j);
+                    }
+                }
+                updateTable(q1dataset,nextValue+20);
+                nextValue+=20;
+            }
         }
     }
 
@@ -168,6 +202,10 @@ public class HomePage extends JFrame implements ActionListener {
 
 
         public q2(){
+            next.setEnabled(true);
+            next.setActionCommand("next");
+            next.addActionListener(this);
+            nextValue=0;
             q2tarea.setText("");
             q2search.setActionCommand("search");
             q2search.addActionListener(this);
@@ -202,6 +240,10 @@ public class HomePage extends JFrame implements ActionListener {
 
     class q3 implements ActionListener{
         public q3(){
+            next.setEnabled(true);
+            next.setActionCommand("next");
+            next.addActionListener(this);
+            nextValue=0;
             q3tf1.setText("");
             q3tf2.setText("");
             q3tf3.setText("");
@@ -266,12 +308,14 @@ public class HomePage extends JFrame implements ActionListener {
 
 
     public HomePage(){
+        this.engine = new DBLPEngine();
         preparegui();
         preparegui1();
         preparegui2();
         preparegui3();
     }
 
+    @SuppressWarnings("unchecked")
     public void preparegui1(){
         q1choiceBox = new JComboBox(choices2);
         q1lb1 = new JLabel("Name/Title tags");
@@ -365,6 +409,7 @@ public class HomePage extends JFrame implements ActionListener {
         left.add(q3p7);q3p7.setVisible(false);
     }
 
+    @SuppressWarnings("unchecked")
     public void preparegui(){
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(800,550);
@@ -393,6 +438,8 @@ public class HomePage extends JFrame implements ActionListener {
         DefaultTableModel model3 = new DefaultTableModel(numRows,q3colHeadings.length);
         model3.setColumnIdentifiers(q3colHeadings);
         q3dataset = new JTable(model3);
+        q1dataset.getColumnModel().getColumn(1).setPreferredWidth(250);
+        q1dataset.getColumnModel().getColumn(2).setPreferredWidth(250);
         choiceBox.setActionCommand("choiceBox");
         choiceBox.addActionListener(this);
         first.add(choiceBox);
@@ -409,6 +456,8 @@ public class HomePage extends JFrame implements ActionListener {
         right.add(dataset4,BorderLayout.SOUTH);
         jp.add(left);
         jp.add(right);
+        next.addActionListener(this);
+        next.setActionCommand("next");
         setVisible(true);
     }
 
@@ -436,6 +485,7 @@ public class HomePage extends JFrame implements ActionListener {
                 dataset1.setVisible(true);
                 dataset2.setVisible(false);
                 dataset3.setVisible(false);
+                nextValue=0;
                 HomePage.q1 q11 = new HomePage.q1();
                 break;
             }
@@ -459,6 +509,7 @@ public class HomePage extends JFrame implements ActionListener {
                 dataset1.setVisible(false);
                 dataset2.setVisible(true);
                 dataset3.setVisible(false);
+                nextValue=0;
                 HomePage.q2 q22 = new HomePage.q2();
                 break;
             case "Query 3":
@@ -481,6 +532,7 @@ public class HomePage extends JFrame implements ActionListener {
                 dataset1.setVisible(false);
                 dataset2.setVisible(false);
                 dataset3.setVisible(true);
+                nextValue=0;
                 HomePage.q3 q33 = new HomePage.q3();
                 break;
         }
