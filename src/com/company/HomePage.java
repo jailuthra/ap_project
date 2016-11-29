@@ -18,7 +18,10 @@ public class HomePage extends JFrame implements ActionListener {
     JLabel Heading;
     JPanel jp;
     JPanel left;
+    JLabel count;
+    JTextField totalCount;
     JPanel right;
+    JPanel last;
     int numRows = 20;
     String[] q1colHeadings = {"Serial No","Authors","Title","Pages","Year","Volume","Journal/Book Title","url"};
     JTable q1dataset;
@@ -114,13 +117,27 @@ public class HomePage extends JFrame implements ActionListener {
                 }
                 else if(!q1input1.equals("") && q1input2.equals("") && q1input3.equals("") && q1input4.equals("")){
                     if(q1choiceBox.getSelectedIndex()==0){
-                        q1results = engine.query1A(q1input1);
-                        System.out.println("Recieved results: "  + q1results.size());
-                        updateTable(q1dataset, 0);
+                        if(!q1rb1.isSelected() && !q1rb2.isSelected()){
+                            q1results = engine.query1A(q1input1);
+                            System.out.println("Recieved results: "  + q1results.size());
+                            updateTable(q1dataset, 0);
+                            totalCount.setText(String.valueOf(q1results.size()));
+                        } else if(q1rb1.isSelected() && !q1rb2.isSelected()){
+                            //sort by year
+                        } else if(!q1rb1.isSelected() && q1rb2.isSelected()){
+                            //sort by relevance
+                        }
                     } else if(q1choiceBox.getSelectedIndex()==1){
-                        q1results = engine.query1B(q1input1);
-                        System.out.println("Received results: " + q1results.size());
-                        updateTable(q1dataset,0);
+                        if(!q1rb1.isSelected() && !q1rb2.isSelected()){
+                            q1results = engine.query1B(q1input1);
+                            System.out.println("Recieved results: "  + q1results.size());
+                            updateTable(q1dataset, 0);
+                            totalCount.setText(String.valueOf(q1results.size()));
+                        } else if(q1rb1.isSelected() && !q1rb2.isSelected()){
+                            //sort by year
+                        } else if(!q1rb1.isSelected() && q1rb2.isSelected()){
+                            //sort by relevance
+                        }
                     }
                 }
                 else if(!q1input1.equals("") && !q1input2.equals("") && !q1input3.equals("") && !q1input4.equals("")){
@@ -138,7 +155,26 @@ public class HomePage extends JFrame implements ActionListener {
 
                     }
                     else {
+                        // only since year textfield is enabled
                         //run code;
+                        if(q1choiceBox.getSelectedIndex()==0){
+                            if(!q1rb1.isSelected() && !q1rb2.isSelected()){
+                                // no radio button selected
+                            } else if(q1rb1.isSelected() && !q1rb2.isSelected()){
+                                // sort by year
+                            } else if(!q1rb1.isSelected() && q1rb2.isSelected()){
+                                // sort by relevance
+                            }
+                        }
+                        else if(q1choiceBox.getSelectedIndex()==1){
+                            if(!q1rb1.isSelected() && !q1rb2.isSelected()){
+                                // no radio button selected
+                            } else if(q1rb1.isSelected() && !q1rb2.isSelected()){
+                                // sort by year
+                            } else if(!q1rb1.isSelected() && q1rb2.isSelected()){
+                                // sort by relevance
+                            }
+                        }
                     }
                 }
                 else if(!q1input1.equals("") && !q1input2.equals("") && !q1input3.equals("") && q1input4.equals("")){
@@ -173,7 +209,25 @@ public class HomePage extends JFrame implements ActionListener {
                         q1jt4.setText("");
                     }
                     else{
-                        //run code
+                        // custom range code
+                        if(q1choiceBox.getSelectedIndex()==0){
+                            if(!q1rb1.isSelected() && !q1rb2.isSelected()){
+                                // no radio button selected
+                            } else if(q1rb1.isSelected() && !q1rb2.isSelected()){
+                                // sort by year
+                            } else if(!q1rb1.isSelected() && q1rb2.isSelected()){
+                                // sort by relevance
+                            }
+                        }
+                        else if(q1choiceBox.getSelectedIndex()==1){
+                            if(!q1rb1.isSelected() && !q1rb2.isSelected()){
+                                // no radio button selected
+                            } else if(q1rb1.isSelected() && !q1rb2.isSelected()){
+                                // sort by year
+                            } else if(!q1rb1.isSelected() && q1rb2.isSelected()){
+                                // sort by relevance
+                            }
+                        }
                     }
                 }
             }
@@ -200,6 +254,17 @@ public class HomePage extends JFrame implements ActionListener {
     }
 
     class q2 implements ActionListener{
+        private ArrayList<Author> q2results;
+
+        private void updateTable(JTable table, int start) {
+            if (q2results != null) {
+                for (int row = start; row < start + 20 && row < q2results.size(); row++) {
+                    Author aut = q2results.get(row);
+                    table.setValueAt(aut.toString(), row - start, 0);
+                }
+            }
+        }
+
 
 
         public q2(){
@@ -228,23 +293,30 @@ public class HomePage extends JFrame implements ActionListener {
                     q2tarea.setText("");
                 }
                 else{
-                    JOptionPane.showMessageDialog(null,"Works");
                     //enter code here
                 }
             }
             else if("reset".equals(actionEvent.getActionCommand())){
                 q2tarea.setText("");
             }
+            else if("next".equals(actionEvent.getActionCommand())){
+                for(int i=0;i<q2dataset.getRowCount();i++){
+                    for(int j=0;j<q2dataset.getColumnCount();j++){
+                        q2dataset.setValueAt("",i,j);
+                    }
+                }
+                updateTable(q2dataset,nextValue+20);
+                nextValue+=20;
+            }
         }
     }
 
 
     class q3 implements ActionListener{
+
+
         public q3(){
-            next.setEnabled(true);
-            next.setActionCommand("next");
-            next.addActionListener(this);
-            nextValue=0;
+            next.setEnabled(false);
             q3tf1.setText("");
             q3tf2.setText("");
             q3tf3.setText("");
@@ -290,7 +362,6 @@ public class HomePage extends JFrame implements ActionListener {
                     q3tf6.setText("");
                 }
                 else {
-                    JOptionPane.showMessageDialog(null,"Works");
                     //enter code here
                 }
             }
@@ -414,6 +485,11 @@ public class HomePage extends JFrame implements ActionListener {
     public void preparegui(){
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(800,550);
+        count = new JLabel("Total count of records: ");
+        totalCount = new JTextField("",5);
+        last = new JPanel();
+        last.add(count);
+        last.add(totalCount);
         dataset1 = new JPanel();
         dataset2 = new JPanel();
         dataset3 = new JPanel();
@@ -421,6 +497,7 @@ public class HomePage extends JFrame implements ActionListener {
         jp = new JPanel();
         next = new JButton("Next");
         Heading = new JLabel("DBLP Query Engine",SwingConstants.CENTER);
+        Heading.setFont(new Font("Times New Roman",Font.PLAIN,26));
         add(Heading, BorderLayout.NORTH);
         add(jp);
         choiceBox = new JComboBox(choices);
@@ -428,6 +505,7 @@ public class HomePage extends JFrame implements ActionListener {
         left.setPreferredSize(new Dimension(300,200));
         left.setLayout(new BoxLayout(left,BoxLayout.Y_AXIS));
         right = new JPanel();
+        right.setLayout(new BoxLayout(right,BoxLayout.Y_AXIS));
         first = new JPanel();
         jp.setLayout(new BoxLayout(jp,BoxLayout.X_AXIS));
         DefaultTableModel model1 = new DefaultTableModel(numRows,q1colHeadings.length);
@@ -454,7 +532,8 @@ public class HomePage extends JFrame implements ActionListener {
         right.add(dataset1);
         right.add(dataset2);
         right.add(dataset3);
-        right.add(dataset4,BorderLayout.SOUTH);
+        right.add(dataset4);
+        right.add(last);
         jp.add(left);
         jp.add(right);
         next.addActionListener(this);

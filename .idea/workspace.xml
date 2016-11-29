@@ -2,12 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="32b8aa80-5ca6-47fd-9edb-b6574e05e7b5" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/parser/Author.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/parser/AuthorParser.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/parser/DBLPEngine.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/parser/Publication.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/parser/Q1Parser.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/parser/Q2Parser.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/company/HomePage.java" afterPath="$PROJECT_DIR$/src/com/company/HomePage.java" />
     </list>
@@ -33,13 +27,25 @@
       <file leaf-file-name="HomePage.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/company/HomePage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="186" column="6" selection-start-line="186" selection-start-column="6" selection-end-line="186" selection-end-column="6" />
+            <state relative-caret-position="1602">
+              <caret line="238" column="0" selection-start-line="238" selection-start-column="0" selection-end-line="238" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#12307#12337#0" expanded="true" />
-                <element signature="e#15680#15710#0" expanded="true" />
-                <marker date="1480385313218" expanded="false" signature="20819:20829" ph=" { " />
+                <element signature="e#16088#16118#0" expanded="true" />
+                <element signature="e#19461#19491#0" expanded="true" />
+                <marker date="1480393041789" expanded="false" signature="24921:24931" ph=" { " />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Author.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/company/Author.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -81,7 +87,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="24" />
+    <option name="x" value="-1366" />
+    <option name="y" value="-744" />
     <option name="width" value="1366" />
     <option name="height" value="744" />
   </component>
@@ -474,7 +481,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="24" width="1366" height="744" extended-state="6" />
+    <frame x="-1366" y="-744" width="1366" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -603,9 +610,9 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#12307#12337#0" expanded="true" />
-            <element signature="e#15680#15710#0" expanded="true" />
-            <marker date="1480385313218" expanded="false" signature="20819:20829" ph=" { " />
+            <element signature="e#16088#16118#0" expanded="true" />
+            <element signature="e#19461#19491#0" expanded="true" />
+            <marker date="1480393041789" expanded="false" signature="24921:24931" ph=" { " />
           </folding>
         </state>
       </provider>
@@ -626,9 +633,9 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#12307#12337#0" expanded="true" />
-            <element signature="e#15680#15710#0" expanded="true" />
-            <marker date="1480385313218" expanded="false" signature="20819:20829" ph=" { " />
+            <element signature="e#16088#16118#0" expanded="true" />
+            <element signature="e#19461#19491#0" expanded="true" />
+            <marker date="1480393041789" expanded="false" signature="24921:24931" ph=" { " />
           </folding>
         </state>
       </provider>
@@ -659,9 +666,9 @@
           <caret line="198" column="17" selection-start-line="198" selection-start-column="17" selection-end-line="198" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#12307#12337#0" expanded="true" />
-            <element signature="e#15680#15710#0" expanded="true" />
-            <marker date="1480385313218" expanded="false" signature="20819:20829" ph=" { " />
+            <element signature="e#16088#16118#0" expanded="true" />
+            <element signature="e#19461#19491#0" expanded="true" />
+            <marker date="1480393041789" expanded="false" signature="24921:24931" ph=" { " />
           </folding>
         </state>
       </provider>
@@ -682,9 +689,9 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#12307#12337#0" expanded="true" />
-            <element signature="e#15680#15710#0" expanded="true" />
-            <marker date="1480385313218" expanded="false" signature="20819:20829" ph=" { " />
+            <element signature="e#16088#16118#0" expanded="true" />
+            <element signature="e#19461#19491#0" expanded="true" />
+            <marker date="1480393041789" expanded="false" signature="24921:24931" ph=" { " />
           </folding>
         </state>
       </provider>
@@ -825,16 +832,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/company/Author.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/company/HomePageBackup.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
@@ -891,15 +888,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/company/HomePage.java">
+    <entry file="file://$PROJECT_DIR$/src/com/company/Author.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="186" column="6" selection-start-line="186" selection-start-column="6" selection-end-line="186" selection-end-column="6" />
+        <state relative-caret-position="180">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#12307#12337#0" expanded="true" />
-            <element signature="e#15680#15710#0" expanded="true" />
-            <marker date="1480385313218" expanded="false" signature="20819:20829" ph=" { " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/company/HomePage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1602">
+          <caret line="238" column="0" selection-start-line="238" selection-start-column="0" selection-end-line="238" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#16088#16118#0" expanded="true" />
+            <element signature="e#19461#19491#0" expanded="true" />
+            <marker date="1480393041789" expanded="false" signature="24921:24931" ph=" { " />
           </folding>
         </state>
       </provider>
