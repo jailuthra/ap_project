@@ -25,14 +25,24 @@ class DBLPEngine {
         ArrayList<String> tags = new ArrayList<>(Arrays.asList(title.split("\\s*(-|,|\\s)\\s*")));
         return Q1Parser.queryB(tags, authorMap);
     }
+
+    public ArrayList<Author> query2(int k) {
+        if (authorMap == null) {
+            this.loadAuthors();
+        }
+        return Q2Parser.query(k, authorMap);
+    }
     
     public static void main(String[] args) {
         DBLPEngine engine = new DBLPEngine();
-        for (Publication pub: Publication.sortByYear(engine.query1A("Alexander Weber"))) {
-            System.out.println(pub + " by " + pub.getAuthors());
+        for (Author a: engine.query2(300)) {
+            System.out.println(a);
         }
-        for (Publication pub: Publication.sortByRel(engine.query1B("finite state machines"))) {
-            System.out.println(pub + " by " + pub.getAuthors());
-        }
+        //for (Publication pub: Publication.sortByYear(engine.query1A("Alexander Weber"))) {
+            //System.out.println(pub + " by " + pub.getAuthors());
+        //}
+        //for (Publication pub: Publication.sortByRel(engine.query1B("finite state machines"))) {
+            //System.out.println(pub + " by " + pub.getAuthors());
+        //}
     }
 }

@@ -4,11 +4,14 @@ import java.io.*;
 class Author implements Serializable {
     private String name;
     private String key;
-    private ArrayList<String> names;
+    private Set<String> names;
+    public static boolean pubs_computed = false;
+    private int nb_pubs;
 
     public Author(String key) {
         this.key = key;
-        this.names = new ArrayList<>();
+        this.names = new HashSet<>();
+        this.nb_pubs = 0;
     }
 
     public void addName(String name) {
@@ -18,21 +21,36 @@ class Author implements Serializable {
         this.names.add(name);
     }
 
+    public void incrementPubs() {
+        if (!pubs_computed) {
+            nb_pubs += 1;
+        }
+    }
+
+    public boolean pubsMoreThan(int k) {
+        if (pubs_computed) {
+            return (nb_pubs > k);
+        } else {
+            throw new RuntimeException("Publications not computed");
+        }
+    }
+
     public String getName() {
         return this.name;
     }
 
-    public ArrayList<String> getNames() {
+    public Set<String> getNames() {
         return this.names;
     }
 
     public String toString() {
-        String out = key + " ";
-        for (int i = 0; i < names.size(); i++) {
-            if (i == names.size() - 1) {
-                out += name;
+        String out = "";
+        String[] list = this.names.toArray(new String[names.size()]);
+        for (int i = 0; i < list.length; i++) {
+            if (i == list.length - 1) {
+                out += list[i];
             } else {
-                out += name + " aka ";
+                out += list[i] + " aka ";
             }
         }
         return out;

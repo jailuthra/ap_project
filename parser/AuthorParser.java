@@ -6,6 +6,8 @@ import java.util.*;
 import java.io.*;
 
 class AuthorParser extends DefaultHandler {
+    private StringBuilder contentBuf = new StringBuilder();
+    private boolean bufupdate;
     private String content;
     private Author author;
     private static HashMap<String, Author> authors = new HashMap<>(1800000);
@@ -14,10 +16,10 @@ class AuthorParser extends DefaultHandler {
     }
 
     public void endDocument() throws SAXException {
-        //System.out.println("Authors: " + authors.size());
         //for (String author: authors.keySet()) {
             //System.out.println(authors.get(author).getName());
         //}
+        System.out.println("Authors: " + authors.size());
     }
 
     public void startElement(String uri, String localName,
@@ -27,16 +29,21 @@ class AuthorParser extends DefaultHandler {
             if (key != null && key.substring(0, 9).equals("homepages")) {
                 author = new Author(atts.getValue("key"));
             }
+        } else if (author != null && qName.equals("author")) {
+            this.bufupdate = true;
         }
     }
 
     public void endElement(String uri, String localName,
                            String qName) throws SAXException {
         if (author != null) {
+            content = contentBuf.toString();
             if (qName.equals("author")) {
                 author.addName(content);
+                bufupdate = false;
+                contentBuf.setLength(0);
             } else if (qName.equals("www")) {
-                if (author.getName() != null && author.getName().length() > 2) {
+                if (author.getName() != null) {
                     authors.put(author.getName(), author);
                 }
                 author = null;
@@ -45,7 +52,10 @@ class AuthorParser extends DefaultHandler {
     }
 
 	public void characters(char[] ch, int start, int length){		
-	    this.content = new String(ch, start, length);
+        if (length == 0) return;
+        if (bufupdate) {
+            contentBuf.append(ch, start, length);
+        }
 	}
 
     public static HashMap<String, Author> getHashMap() throws Exception
