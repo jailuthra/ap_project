@@ -45,8 +45,10 @@ class AuthorParser extends DefaultHandler {
                 bufupdate = false;
                 contentBuf.setLength(0);
             } else if (qName.equals("www")) {
-                if (author.getName() != null) {
-                    authors.put(author.getName(), author);
+                if (author.getNames().size() != 0) {
+                    for (String name: author.getNames()) {
+                        authors.put(name, author);
+                    }
                 }
                 author = null;
             }

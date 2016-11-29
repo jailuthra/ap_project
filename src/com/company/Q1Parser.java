@@ -165,11 +165,9 @@ class Q1Parser extends DefaultHandler {
 
     private Set<String> relevantAuthors(String author) {
         Set<String> ret = new HashSet<>();
-        for (Author au: authors.values()) {
-            for (String a: au.getNames()) {
-                if (a != null && a.toLowerCase().contains(author.toLowerCase())) {
-                    ret.addAll(au.getNames());
-                }
+        for (String a: authors.keySet()) {
+            if (a != null && a.toLowerCase().contains(author.toLowerCase())) {
+                ret.addAll(authors.get(a).getNames());
             }
         }
         return ret;

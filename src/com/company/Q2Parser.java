@@ -8,7 +8,6 @@ import java.util.*;
 import java.io.*;
 
 class Q2Parser extends DefaultHandler {
-    private ArrayList<String> relevant;
     private Publication pub = null;
     private HashMap<String, Author> authors;
 
@@ -93,7 +92,7 @@ class Q2Parser extends DefaultHandler {
     private static ArrayList<Author>
         computeResult(HashMap<String, Author> authors, int k) {
         ArrayList<Author> ret = new ArrayList<>();
-        for (Author a: authors.values()) {
+        for (Author a: new HashSet<Author>(authors.values())) {
             if (a.pubsMoreThan(k)) {
                 ret.add(a);
             }
