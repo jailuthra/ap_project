@@ -14,7 +14,9 @@ public class HomePage extends JFrame implements ActionListener {
     DBLPEngine engine;
 
     int nextValue;
-
+    HomePage.q1 q11;
+    HomePage.q2 q22;
+    HomePage.q3 q33;
     JLabel Heading;
     JPanel jp;
     JPanel left;
@@ -67,7 +69,7 @@ public class HomePage extends JFrame implements ActionListener {
         private ArrayList<Publication> q1results;
 
         public q1(){
-            nextValue=0;
+            //nextValue=0;
             q1jt1.setText("");
             q1jt2.setText("");
             q1jt3.setText("");
@@ -107,6 +109,7 @@ public class HomePage extends JFrame implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             if("search".equals(actionEvent.getActionCommand())){
+                nextValue = 0;
                 q1input1 = q1jt1.getText();
                 q1input2 = q1jt2.getText();
                 q1input3 = q1jt3.getText();
@@ -117,16 +120,15 @@ public class HomePage extends JFrame implements ActionListener {
                 }
                 else if(!q1input1.equals("") && q1input2.equals("") && q1input3.equals("") && q1input4.equals("")){
                     if(q1choiceBox.getSelectedIndex()==0){
-                        if(!q1rb1.isSelected() && !q1rb2.isSelected()){
-                            q1results = engine.query1A(q1input1);
-                            System.out.println("Recieved results: "  + q1results.size());
-                            updateTable(q1dataset, 0);
-                            totalCount.setText(String.valueOf(q1results.size()));
-                        } else if(q1rb1.isSelected() && !q1rb2.isSelected()){
-                            //sort by year
+                        q1results = engine.query1A(q1input1);
+                        System.out.println("Recieved results: "  + q1results.size());
+                        if(!q1rb2.isSelected()){
+
                         } else if(!q1rb1.isSelected() && q1rb2.isSelected()){
                             //sort by relevance
                         }
+                        updateTable(q1dataset, 0);
+                        totalCount.setText(String.valueOf(q1results.size()));
                     } else if(q1choiceBox.getSelectedIndex()==1){
                         if(!q1rb1.isSelected() && !q1rb2.isSelected()){
                             q1results = engine.query1B(q1input1);
@@ -242,6 +244,7 @@ public class HomePage extends JFrame implements ActionListener {
                 q1bg1.clearSelection();
             }
             else if("next".equals(actionEvent.getActionCommand())){
+                System.out.println("Im in next");
                 for(int i=0;i<q1dataset.getRowCount();i++){
                     for(int j=0;j<q1dataset.getColumnCount();j++){
                         q1dataset.setValueAt("",i,j);
@@ -284,6 +287,7 @@ public class HomePage extends JFrame implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             if("search".equals(actionEvent.getActionCommand())){
+                nextValue = 0;
                 q2input = q2tarea.getText();
                 if(q2input.equals("")){
                     JOptionPane.showMessageDialog(null,"Enter number of Publications");
@@ -333,6 +337,7 @@ public class HomePage extends JFrame implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             if("search".equals(actionEvent.getActionCommand())){
+                nextValue = 0;
                 q3input1 = q3tf1.getText();
                 q3input2 = q3tf2.getText();
                 q3input3 = q3tf3.getText();
@@ -565,8 +570,9 @@ public class HomePage extends JFrame implements ActionListener {
                 dataset1.setVisible(true);
                 dataset2.setVisible(false);
                 dataset3.setVisible(false);
-                nextValue=0;
-                HomePage.q1 q11 = new HomePage.q1();
+                if (q11 == null) {
+                    q11 = new HomePage.q1();
+                }
                 break;
             }
             case "Query 2":
@@ -589,8 +595,9 @@ public class HomePage extends JFrame implements ActionListener {
                 dataset1.setVisible(false);
                 dataset2.setVisible(true);
                 dataset3.setVisible(false);
-                nextValue=0;
-                HomePage.q2 q22 = new HomePage.q2();
+                if (q22 == null) {
+                    q22 = new HomePage.q2();
+                }
                 break;
             case "Query 3":
                 q1p1.setVisible(false);
@@ -612,8 +619,9 @@ public class HomePage extends JFrame implements ActionListener {
                 dataset1.setVisible(false);
                 dataset2.setVisible(false);
                 dataset3.setVisible(true);
-                nextValue=0;
-                HomePage.q3 q33 = new HomePage.q3();
+                if (q33 == null) {
+                    q33 = new HomePage.q3();
+                }
                 break;
         }
     }
