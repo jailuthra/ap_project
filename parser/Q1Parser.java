@@ -9,11 +9,14 @@ class Q1Parser extends DefaultHandler {
     private String authorToSearch;
     private ArrayList<String> tags;
     private ArrayList<String> relevant;
-    private String content;
     private Publication pub = null;
     private HashMap<String, Author> authors;
     private char queryType;
     private static ArrayList<Publication> result = new ArrayList<>();
+
+    private StringBuilder contentBuf = new StringBuilder();
+    private boolean bufupdate;
+    private String content;
 
     private Q1Parser(String author, HashMap<String, Author> authors) {
         queryType = 'A';
@@ -43,6 +46,14 @@ class Q1Parser extends DefaultHandler {
             qName.equals("incollection") || qName.equals("phdthesis") ||
             qName.equals("mastersthesis")) {
             pub = new Publication(qName, atts.getValue("key")); 
+        } else if (pub != null) {
+            if (qName.equals("pages") || qName.equals("title") ||
+                qName.equals("year") || qName.equals("volume") ||
+                qName.equals("volume") || qName.equals("journal") ||
+                qName.equals("booktitle") || qName.equals("url") ||
+                qName.equals("author")) {
+                this.bufupdate = true;
+            }
         }
     }
 
@@ -50,6 +61,7 @@ class Q1Parser extends DefaultHandler {
     public void endElement(String uri, String localName,
                            String qName) throws SAXException {
         if (pub != null) {
+            content = contentBuf.toString();
             if (qName.equals("pages")) {
                 pub.pages = content;
             } else if (qName.equals("title")) {
@@ -80,6 +92,15 @@ class Q1Parser extends DefaultHandler {
                     }
                 }
             }
+
+            if (qName.equals("pages") || qName.equals("title") ||
+                qName.equals("year") || qName.equals("volume") ||
+                qName.equals("volume") || qName.equals("journal") ||
+                qName.equals("booktitle") || qName.equals("url") ||
+                qName.equals("author")) {
+                this.bufupdate = false;
+                contentBuf.setLength(0);
+            }
             
             if (qName.equals(pub.type)) {
                 pub = null;
@@ -88,7 +109,10 @@ class Q1Parser extends DefaultHandler {
     }
 
 	public void characters(char[] ch, int start, int length){		
-	    this.content = new String(ch, start, length);
+        if (length == 0) return;
+        if (bufupdate) {
+            contentBuf.append(ch, start, length);
+        }
 	}
 
     public static ArrayList<Publication>

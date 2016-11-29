@@ -35,14 +35,15 @@ class DBLPEngine {
     
     public static void main(String[] args) {
         DBLPEngine engine = new DBLPEngine();
-        for (Author a: engine.query2(300)) {
-            System.out.println(a);
+        System.out.println(engine.query2(350).size());
+        //for (Author a: engine.query2(300)) {
+            //System.out.println(a);
+        //}
+        for (Publication pub: Publication.sortByYear(engine.query1A("Alexander Weber"))) {
+            System.out.println(pub + " by " + pub.getAuthors());
         }
-        //for (Publication pub: Publication.sortByYear(engine.query1A("Alexander Weber"))) {
-            //System.out.println(pub + " by " + pub.getAuthors());
-        //}
-        //for (Publication pub: Publication.sortByRel(engine.query1B("finite state machines"))) {
-            //System.out.println(pub + " by " + pub.getAuthors());
-        //}
+        for (Publication pub: Publication.sortByRel(engine.query1B("finite state machines"))) {
+            System.out.println(pub + " by " + pub.getAuthors());
+        }
     }
 }
