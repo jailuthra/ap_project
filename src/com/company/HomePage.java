@@ -86,22 +86,23 @@ public class HomePage extends JFrame implements ActionListener {
         }
 
         private void updateTable(JTable table, int start) {
-            for (int row = start; row < start + 20 && row < q1results.size(); row++) {
-                Publication pub = q1results.get(row);
-                table.setValueAt(row + 1, row, 0);
-                table.setValueAt(pub.getAuthors(), row, 1);
-                table.setValueAt(pub.title, row, 2);
-                table.setValueAt(pub.pages, row, 3);
-                table.setValueAt(pub.year, row, 4);
-                table.setValueAt(pub.volume, row, 5);
-                table.setValueAt(pub.journal_book, row, 6);
-                table.setValueAt(pub.url, row, 7);
+            if (q1results != null) {
+                for (int row = start; row < start + 20 && row < q1results.size(); row++) {
+                    Publication pub = q1results.get(row);
+                    table.setValueAt(row + 1, row - start, 0);
+                    table.setValueAt(pub.getAuthors(), row - start, 1);
+                    table.setValueAt(pub.title, row - start, 2);
+                    table.setValueAt(pub.pages, row - start, 3);
+                    table.setValueAt(pub.year, row - start, 4);
+                    table.setValueAt(pub.volume, row - start, 5);
+                    table.setValueAt(pub.journal_book, row - start, 6);
+                    table.setValueAt(pub.url, row - start, 7);
+                }
             }
         }
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            System.out.println();
             if("search".equals(actionEvent.getActionCommand())){
                 q1input1 = q1jt1.getText();
                 q1input2 = q1jt2.getText();
