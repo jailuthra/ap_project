@@ -3,11 +3,13 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
 
 /**
  * Created by vasu on 28/11/16.
  */
 public class HomePage extends JFrame implements ActionListener {
+    DBLPEngine engine;
 
     JLabel Heading;
     JPanel jp;
@@ -55,6 +57,7 @@ public class HomePage extends JFrame implements ActionListener {
 
 
     class q1 implements ActionListener{
+        private ArrayList<Publication> q1results;
 
         public q1(){
             q1jt1.setText("");
@@ -74,24 +77,37 @@ public class HomePage extends JFrame implements ActionListener {
             q1reset.addActionListener(this);
         }
 
+        private void updateTable(JTable table, int start) {
+            for (int row = start; row < start + 20 && row < q1results.size(); row++) {
+                Publication pub = q1results.get(row);
+                table.setValueAt(row + 1, row, 0);
+                table.setValueAt(pub.getAuthors(), row, 1);
+                table.setValueAt(pub.title, row, 2);
+                table.setValueAt(pub.pages, row, 3);
+                table.setValueAt(pub.year, row, 4);
+                table.setValueAt(pub.volume, row, 5);
+                table.setValueAt(pub.journal_book, row, 6);
+                table.setValueAt(pub.url, row, 7);
+            }
+        }
+
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             System.out.println();
             if("search".equals(actionEvent.getActionCommand())){
-                System.out.println("search");
                 q1input1 = q1jt1.getText();
                 q1input2 = q1jt2.getText();
                 q1input3 = q1jt3.getText();
                 q1input4 = q1jt4.getText();
+                System.out.println("search " + q1input1);
                 if(q1input1.equals("")){
                     JOptionPane.showMessageDialog(null,"Enter Author/Title name");
                 }
-                else if(!q1input1.matches("[0-9]+") || !q1input1.contains("[a-zA-Z]+")){
-                    JOptionPane.showMessageDialog(null,"Enter valid input");
-                    q1jt1.setText("");
-                }
                 else if(q1input2.equals("") && q1input3.equals("") && q1input4.equals("")){
-                    //run code;
+                    // CALLING ENGINE
+                    q1results = engine.query1A(q1input1); 
+                    System.out.println("Recieved results: "  + q1results.size());
+                    updateTable(q1dataset, 0);
                 }
                 else if(!q1input2.equals("") && !q1input3.equals("") && !q1input4.equals("")){
                     JOptionPane.showMessageDialog(null,"Invalid input format");
@@ -262,12 +278,14 @@ public class HomePage extends JFrame implements ActionListener {
 
 
     public HomePage(){
+        this.engine = new DBLPEngine();
         preparegui();
         preparegui1();
         preparegui2();
         preparegui3();
     }
 
+    @SuppressWarnings("unchecked")
     public void preparegui1(){
         q1choiceBox = new JComboBox(choices2);
         q1lb1 = new JLabel("Name/Title tags");
@@ -361,6 +379,7 @@ public class HomePage extends JFrame implements ActionListener {
         left.add(q3p7);q3p7.setVisible(false);
     }
 
+    @SuppressWarnings("unchecked")
     public void preparegui(){
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(800,550);
