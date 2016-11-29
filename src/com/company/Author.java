@@ -7,12 +7,14 @@ class Author implements Serializable {
     private String name;
     private String key;
     private Set<String> names;
+    public Map<Integer, Integer> pubs_in_year;
     public static boolean pubs_computed = false;
     private int nb_pubs;
 
     public Author(String key) {
         this.key = key;
         this.names = new HashSet<>();
+        this.pubs_in_year = new HashMap<>();
         this.nb_pubs = 0;
     }
 
@@ -43,6 +45,18 @@ class Author implements Serializable {
 
     public Set<String> getNames() {
         return this.names;
+    }
+
+    public void incrementPubYear(int year) {
+        if (pubs_in_year.containsKey(year)) {
+            pubs_in_year.put(year, pubs_in_year.get(year) + 1);
+        } else {
+            pubs_in_year.put(year, 1);
+        }
+    }
+
+    public int predict(int year) {
+        return 0;
     }
 
     public String toString() {
