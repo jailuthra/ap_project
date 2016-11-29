@@ -69,7 +69,6 @@ public class HomePage extends JFrame implements ActionListener {
         private ArrayList<Publication> q1results;
 
         public q1(){
-            //nextValue=0;
             q1jt1.setText("");
             q1jt2.setText("");
             q1jt3.setText("");
@@ -123,23 +122,26 @@ public class HomePage extends JFrame implements ActionListener {
                         q1results = engine.query1A(q1input1);
                         System.out.println("Recieved results: "  + q1results.size());
                         if(!q1rb2.isSelected()){
-
+                            //sort by year
+                            q1results = Publication.sortByYear(q1results);
                         } else if(!q1rb1.isSelected() && q1rb2.isSelected()){
                             //sort by relevance
+                            q1results = Publication.sortByRel(q1results);
                         }
                         updateTable(q1dataset, 0);
                         totalCount.setText(String.valueOf(q1results.size()));
                     } else if(q1choiceBox.getSelectedIndex()==1){
-                        if(!q1rb1.isSelected() && !q1rb2.isSelected()){
-                            q1results = engine.query1B(q1input1);
-                            System.out.println("Recieved results: "  + q1results.size());
-                            updateTable(q1dataset, 0);
-                            totalCount.setText(String.valueOf(q1results.size()));
-                        } else if(q1rb1.isSelected() && !q1rb2.isSelected()){
+                        q1results = engine.query1B(q1input1);
+                        System.out.println("Recieved results: "  + q1results.size());
+                        if(!q1rb2.isSelected()){
                             //sort by year
+                            q1results = Publication.sortByYear(q1results);
                         } else if(!q1rb1.isSelected() && q1rb2.isSelected()){
                             //sort by relevance
+                            q1results = Publication.sortByRel(q1results);
                         }
+                        updateTable(q1dataset, 0);
+                        totalCount.setText(String.valueOf(q1results.size()));
                     }
                 }
                 else if(!q1input1.equals("") && !q1input2.equals("") && !q1input3.equals("") && !q1input4.equals("")){
@@ -157,25 +159,30 @@ public class HomePage extends JFrame implements ActionListener {
 
                     }
                     else {
-                        // only since year textfield is enabled
-                        //run code;
                         if(q1choiceBox.getSelectedIndex()==0){
-                            if(!q1rb1.isSelected() && !q1rb2.isSelected()){
-                                // no radio button selected
-                            } else if(q1rb1.isSelected() && !q1rb2.isSelected()){
-                                // sort by year
+                            q1results = Publication.filterYear(engine.query1A(q1input1), Integer.parseInt(q1input2));
+                            System.out.println("Recieved results: "  + q1results.size());
+                            if(!q1rb2.isSelected()){
+                                //sort by year
+                                q1results = Publication.sortByYear(q1results);
                             } else if(!q1rb1.isSelected() && q1rb2.isSelected()){
-                                // sort by relevance
+                                //sort by relevance
+                                q1results = Publication.sortByRel(q1results);
                             }
-                        }
-                        else if(q1choiceBox.getSelectedIndex()==1){
-                            if(!q1rb1.isSelected() && !q1rb2.isSelected()){
-                                // no radio button selected
-                            } else if(q1rb1.isSelected() && !q1rb2.isSelected()){
-                                // sort by year
+                            updateTable(q1dataset, 0);
+                            totalCount.setText(String.valueOf(q1results.size()));
+                        } else if(q1choiceBox.getSelectedIndex()==1){
+                            q1results = Publication.filterYear(engine.query1B(q1input1), Integer.parseInt(q1input2));
+                            System.out.println("Recieved results: "  + q1results.size());
+                            if(!q1rb2.isSelected()){
+                                //sort by year
+                                q1results = Publication.sortByYear(q1results);
                             } else if(!q1rb1.isSelected() && q1rb2.isSelected()){
-                                // sort by relevance
+                                //sort by relevance
+                                q1results = Publication.sortByRel(q1results);
                             }
+                            updateTable(q1dataset, 0);
+                            totalCount.setText(String.valueOf(q1results.size()));
                         }
                     }
                 }
@@ -213,22 +220,29 @@ public class HomePage extends JFrame implements ActionListener {
                     else{
                         // custom range code
                         if(q1choiceBox.getSelectedIndex()==0){
-                            if(!q1rb1.isSelected() && !q1rb2.isSelected()){
-                                // no radio button selected
-                            } else if(q1rb1.isSelected() && !q1rb2.isSelected()){
-                                // sort by year
+                            q1results = Publication.filterYear(engine.query1A(q1input1), Integer.parseInt(q1input3), Integer.parseInt(q1input4));
+                            System.out.println("Recieved results: "  + q1results.size());
+                            if(!q1rb2.isSelected()){
+                                //sort by year
+                                q1results = Publication.sortByYear(q1results);
                             } else if(!q1rb1.isSelected() && q1rb2.isSelected()){
-                                // sort by relevance
+                                //sort by relevance
+                                q1results = Publication.sortByRel(q1results);
                             }
-                        }
-                        else if(q1choiceBox.getSelectedIndex()==1){
-                            if(!q1rb1.isSelected() && !q1rb2.isSelected()){
-                                // no radio button selected
-                            } else if(q1rb1.isSelected() && !q1rb2.isSelected()){
-                                // sort by year
+                            updateTable(q1dataset, 0);
+                            totalCount.setText(String.valueOf(q1results.size()));
+                        } else if(q1choiceBox.getSelectedIndex()==1){
+                            q1results = Publication.filterYear(engine.query1B(q1input1), Integer.parseInt(q1input3), Integer.parseInt(q1input4));
+                            System.out.println("Recieved results: "  + q1results.size());
+                            if(!q1rb2.isSelected()){
+                                //sort by year
+                                q1results = Publication.sortByYear(q1results);
                             } else if(!q1rb1.isSelected() && q1rb2.isSelected()){
-                                // sort by relevance
+                                //sort by relevance
+                                q1results = Publication.sortByRel(q1results);
                             }
+                            updateTable(q1dataset, 0);
+                            totalCount.setText(String.valueOf(q1results.size()));
                         }
                     }
                 }
@@ -244,7 +258,6 @@ public class HomePage extends JFrame implements ActionListener {
                 q1bg1.clearSelection();
             }
             else if("next".equals(actionEvent.getActionCommand())){
-                System.out.println("Im in next");
                 for(int i=0;i<q1dataset.getRowCount();i++){
                     for(int j=0;j<q1dataset.getColumnCount();j++){
                         q1dataset.setValueAt("",i,j);
@@ -274,7 +287,6 @@ public class HomePage extends JFrame implements ActionListener {
             next.setEnabled(true);
             next.setActionCommand("next");
             next.addActionListener(this);
-            nextValue=0;
             q2tarea.setText("");
             q2search.setActionCommand("search");
             q2search.addActionListener(this);
