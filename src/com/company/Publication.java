@@ -50,6 +50,26 @@ class Publication {
         return relevance + " " + title + " " + year + " ";
     }
 
+    public static ArrayList<Publication> filterYear(ArrayList<Publication> l1, int y1, int y2) {
+        ArrayList<Publication> out = new ArrayList<>();
+        for (Publication pub: l1) {
+            if (pub.year <= y2 && pub.year >= y1) {
+                out.add(pub);
+            }
+        }
+        return out;
+    }
+
+    public static ArrayList<Publication> filterYear(ArrayList<Publication> l1, int y1) {
+        ArrayList<Publication> out = new ArrayList<>();
+        for (Publication pub: l1) {
+            if (pub.year >= y1) {
+                out.add(pub);
+            }
+        }
+        return out;
+    }
+
     public static ArrayList<Publication> sortByYear(ArrayList<Publication> l1) {
         Collections.sort(l1, new YearComparator());
         return l1;

@@ -4,6 +4,8 @@ import java.util.*;
 
 class DBLPEngine {
     HashMap<String, Author> authorMap = null;
+    HashMap<String, ArrayList<Publication>> q1Acache = new HashMap<>();
+    HashMap<String, ArrayList<Publication>> q1Bcache = new HashMap<>();
     
     private void loadAuthors() {
         try {
@@ -14,18 +16,24 @@ class DBLPEngine {
     }
 
     public ArrayList<Publication> query1A(String author) {
-        if (authorMap == null) {
-            this.loadAuthors();
+        if (!q1Acache.containsKey(author)) {
+            if (authorMap == null) {
+                this.loadAuthors();
+            }
+            q1Acache.put(author, Q1Parser.queryA(author, authorMap));
         }
-        return Q1Parser.queryA(author, authorMap);
+        return q1Acache.get(author);
     }
     
     public ArrayList<Publication> query1B(String title) {
-        if (authorMap == null) {
-            this.loadAuthors();
+        if (!q1Bcache.containsKey(title)) {
+            if (authorMap == null) {
+                this.loadAuthors();
+            }
+            ArrayList<String> tags = new ArrayList<>(Arrays.asList(title.split("\\s*(-|,|\\s)\\s*")));
+            q1Bcache.put(title, Q1Parser.queryB(tags, authorMap));
         }
-        ArrayList<String> tags = new ArrayList<>(Arrays.asList(title.split("\\s*(-|,|\\s)\\s*")));
-        return Q1Parser.queryB(tags, authorMap);
+        return q1Bcache.get(title);
     }
 
     public ArrayList<Author> query2(int k) {
@@ -38,6 +46,7 @@ class DBLPEngine {
     public static void main(String[] args) {
         DBLPEngine engine = new DBLPEngine();
         System.out.println(engine.query2(350).size());
+        System.out.println(engine.query2(450).size());
         //for (Author a: engine.query2(300)) {
             //System.out.println(a);
         //}
