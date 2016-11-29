@@ -1,5 +1,10 @@
 package com.company;
 
+/**
+ * \author Jai Luthra   2015043
+ * \author Vasu Agarwal 2015113
+ */
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
