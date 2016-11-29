@@ -8,6 +8,7 @@ class Author implements Serializable {
     private String key;
     private Set<String> names;
     public Map<Integer, Integer> pubs_in_year;
+    public Set<Publication> pubs = new HashSet<>();
     public static boolean pubs_computed = false;
     private int nb_pubs;
 
@@ -47,6 +48,10 @@ class Author implements Serializable {
         return this.names;
     }
 
+    public void addPub(Publication pub) {
+        this.pubs.add(pub);
+    }
+
     public void incrementPubYear(int year) {
         if (pubs_in_year.containsKey(year)) {
             pubs_in_year.put(year, pubs_in_year.get(year) + 1);
@@ -55,8 +60,32 @@ class Author implements Serializable {
         }
     }
 
+    public int getYearVal(int year) {
+        if (pubs_in_year.containsKey(year)) {
+            return 0;
+        } else {
+            return pubs_in_year.get(year);
+        }
+    }
+
     public int predict(int year) {
-        return 0;
+        System.out.printf("Author: %s ", this);
+        System.out.println(pubs_in_year);
+        ArrayList<Integer> keys = new ArrayList<Integer>(pubs_in_year.keySet());
+        Collections.sort(keys);
+        if (year - 1 > keys.get(keys.size() - 1)) {
+            return 0;
+        }
+        int sum = 0;
+        int max_year = 0;
+        for (int key: keys) {
+            if (key < year) {
+                sum += pubs_in_year.get(key);
+                max_year = key;
+            }
+        }
+        int no_of_years = max_year - keys.get(0);
+        return (sum / no_of_years) * (year - max_year);
     }
 
     public String toString() {

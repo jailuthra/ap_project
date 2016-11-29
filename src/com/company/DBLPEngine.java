@@ -43,10 +43,26 @@ class DBLPEngine {
         }
         return Q2Parser.query(k, authorMap);
     }
+
+    public int[] query3(String[] authors, int year) {
+        if (authorMap == null) {
+            this.loadAuthors();
+        }
+        return Q3Parser.query(authors, year, authorMap);
+    }
+
+    public HashMap<String, Author> getAuthorMap() {
+        return authorMap;
+    }
     
     public static void main(String[] args) {
         DBLPEngine engine = new DBLPEngine();
-        System.out.println(engine.query2(350).size());
+        int [] preds = engine.query3(new String[] {"Donald Ervin Knuth", "Rahul Purandare", "Alexander Weber", "Wei Wang", "H. Vincent Poor"}, 2012);
+        for (int i = 0; i < 5; i++) {
+            System.out.print(preds[i] + " ");
+            System.out.println(preds[5 + i]);
+        }
+        /*System.out.println(engine.query2(350).size());
         System.out.println(engine.query2(450).size());
         //for (Author a: engine.query2(300)) {
             //System.out.println(a);
@@ -56,6 +72,6 @@ class DBLPEngine {
         }
         for (Publication pub: Publication.sortByRel(engine.query1B("finite state machines"))) {
             System.out.println(pub + " by " + pub.getAuthors());
-        }
+        }*/
     }
 }

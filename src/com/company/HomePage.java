@@ -29,7 +29,7 @@ public class HomePage extends JFrame implements ActionListener {
     JTable q1dataset;
     String[] q2colHeadings = {"Authors"};
     JTable q2dataset;
-    String[] q3colHeadings = {"Author","Prediction"};
+    String[] q3colHeadings = {"Author","Prediction", "Actual Value", "Error percentage"};
     JTable q3dataset;
     JPanel dataset1,dataset2,dataset3,dataset4;
     JComboBox choiceBox;
@@ -331,7 +331,7 @@ public class HomePage extends JFrame implements ActionListener {
 
 
     class q3 implements ActionListener{
-
+        private int[] q3results;
 
         public q3(){
             next.setEnabled(false);
@@ -381,7 +381,7 @@ public class HomePage extends JFrame implements ActionListener {
                     q3tf6.setText("");
                 }
                 else {
-                    //enter code here
+                    //q3results = engine.query3(Integer.parseInt(q2input));
                 }
             }
             else if("reset".equals(actionEvent.getActionCommand())){
