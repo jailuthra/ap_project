@@ -64,7 +64,7 @@ class AuthorParser extends DefaultHandler {
     {
 
         authors = new HashMap<>(1800000);
-        String fname = "/Users/darkapex/misc/dblp.xml";
+        String fname = DBLPEngine.fname;
         SAXParserFactory spf = SAXParserFactory.newInstance();
         spf.setNamespaceAware(true);
         SAXParser saxParser = spf.newSAXParser();

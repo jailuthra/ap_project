@@ -106,7 +106,7 @@ class Q2Parser extends DefaultHandler {
     {
         try {
             if (!Author.pubs_computed) {
-                String fname = "/Users/darkapex/misc/dblp.xml";
+                String fname = DBLPEngine.fname;
                 SAXParserFactory spf = SAXParserFactory.newInstance();
                 spf.setNamespaceAware(true);
                 SAXParser saxParser = spf.newSAXParser();

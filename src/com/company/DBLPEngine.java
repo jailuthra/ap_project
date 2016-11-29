@@ -3,9 +3,10 @@ package com.company;
 import java.util.*;
 
 class DBLPEngine {
-    HashMap<String, Author> authorMap = null;
-    HashMap<String, ArrayList<Publication>> q1Acache = new HashMap<>();
-    HashMap<String, ArrayList<Publication>> q1Bcache = new HashMap<>();
+    private HashMap<String, Author> authorMap = null;
+    private HashMap<String, ArrayList<Publication>> q1Acache = new HashMap<>();
+    private HashMap<String, ArrayList<Publication>> q1Bcache = new HashMap<>();
+    public static String fname = "/Users/darkapex/misc/dblp.xml";
     
     private void loadAuthors() {
         try {

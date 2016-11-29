@@ -10,7 +10,7 @@ import java.io.*;
 class Q1Parser extends DefaultHandler {
     private String authorToSearch;
     private ArrayList<String> tags;
-    private ArrayList<String> relevant;
+    private Set<String> relevant;
     private Publication pub = null;
     private HashMap<String, Author> authors;
     private char queryType;
@@ -87,7 +87,7 @@ class Q1Parser extends DefaultHandler {
                 pub.authors.add(content);
                 if (this.queryType == 'A') {
                     for (String relevantAuthor: this.relevant) {
-                        if (content.equalsIgnoreCase(relevantAuthor)) {
+                        if (content.equals(relevantAuthor)) {
                             Q1Parser.result.add(pub);
                             pub.setRelevance(content, authorToSearch);
                         }
@@ -125,7 +125,7 @@ class Q1Parser extends DefaultHandler {
             if (tags.size() == 0) {
                 throw new Exception("Empty search");
             }
-            String fname = "/Users/darkapex/misc/dblp.xml";
+            String fname = DBLPEngine.fname;
             SAXParserFactory spf = SAXParserFactory.newInstance();
             spf.setNamespaceAware(true);
             SAXParser saxParser = spf.newSAXParser();
@@ -148,7 +148,7 @@ class Q1Parser extends DefaultHandler {
             if (author.equals("")) {
                 throw new Exception("Empty search");
             }
-            String fname = "/Users/darkapex/misc/dblp.xml";
+            String fname = DBLPEngine.fname;
             SAXParserFactory spf = SAXParserFactory.newInstance();
             spf.setNamespaceAware(true);
             SAXParser saxParser = spf.newSAXParser();
@@ -163,12 +163,13 @@ class Q1Parser extends DefaultHandler {
         }
     }
 
-    private ArrayList<String> relevantAuthors(String author) {
-        ArrayList<String> ret = new ArrayList<>();
-        for (String a: authors.keySet()) {
-            if (a != null && a.contains(author)) {
-                //System.out.println(a);
-                ret.addAll(authors.get(a).getNames());
+    private Set<String> relevantAuthors(String author) {
+        Set<String> ret = new HashSet<>();
+        for (Author au: authors.values()) {
+            for (String a: au.getNames()) {
+                if (a != null && a.toLowerCase().contains(author.toLowerCase())) {
+                    ret.addAll(au.getNames());
+                }
             }
         }
         return ret;

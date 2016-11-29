@@ -107,6 +107,11 @@ public class HomePage extends JFrame implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
+            for(int i=0;i<q1dataset.getRowCount();i++){
+                for(int j=0;j<q1dataset.getColumnCount();j++){
+                    q1dataset.setValueAt("",i,j);
+                }
+            }
             if("search".equals(actionEvent.getActionCommand())){
                 nextValue = 0;
                 q1input1 = q1jt1.getText();
@@ -258,11 +263,6 @@ public class HomePage extends JFrame implements ActionListener {
                 q1bg1.clearSelection();
             }
             else if("next".equals(actionEvent.getActionCommand())){
-                for(int i=0;i<q1dataset.getRowCount();i++){
-                    for(int j=0;j<q1dataset.getColumnCount();j++){
-                        q1dataset.setValueAt("",i,j);
-                    }
-                }
                 updateTable(q1dataset,nextValue+20);
                 nextValue+=20;
             }
@@ -281,8 +281,6 @@ public class HomePage extends JFrame implements ActionListener {
             }
         }
 
-
-
         public q2(){
             next.setEnabled(true);
             next.setActionCommand("next");
@@ -298,9 +296,15 @@ public class HomePage extends JFrame implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
+            for(int i=0;i<q2dataset.getRowCount();i++){
+                for(int j=0;j<q2dataset.getColumnCount();j++){
+                    q2dataset.setValueAt("",i,j);
+                }
+            }
             if("search".equals(actionEvent.getActionCommand())){
                 nextValue = 0;
                 q2input = q2tarea.getText();
+                System.out.println("Query 2: " + q2input);
                 if(q2input.equals("")){
                     JOptionPane.showMessageDialog(null,"Enter number of Publications");
                 }
@@ -309,18 +313,16 @@ public class HomePage extends JFrame implements ActionListener {
                     q2tarea.setText("");
                 }
                 else{
-                    //enter code here
+                    q2results = engine.query2(Integer.parseInt(q2input));
+                    System.out.println("Recieved results: "  + q2results.size());
+                    updateTable(q2dataset, 0);
+                    totalCount.setText(String.valueOf(q2results.size()));
                 }
             }
             else if("reset".equals(actionEvent.getActionCommand())){
                 q2tarea.setText("");
             }
             else if("next".equals(actionEvent.getActionCommand())){
-                for(int i=0;i<q2dataset.getRowCount();i++){
-                    for(int j=0;j<q2dataset.getColumnCount();j++){
-                        q2dataset.setValueAt("",i,j);
-                    }
-                }
                 updateTable(q2dataset,nextValue+20);
                 nextValue+=20;
             }
