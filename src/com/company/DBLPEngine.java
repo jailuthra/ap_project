@@ -62,16 +62,13 @@ class DBLPEngine {
             System.out.print(preds[i] + " ");
             System.out.println(preds[5 + i]);
         }
-        /*System.out.println(engine.query2(350).size());
+        System.out.println(engine.query2(350).size());
         System.out.println(engine.query2(450).size());
-        //for (Author a: engine.query2(300)) {
-            //System.out.println(a);
-        //}
         for (Publication pub: Publication.sortByYear(engine.query1A("Alexander Weber"))) {
             System.out.println(pub + " by " + pub.getAuthors());
         }
         for (Publication pub: Publication.sortByRel(engine.query1B("finite state machines"))) {
             System.out.println(pub + " by " + pub.getAuthors());
-        }*/
+        }
     }
 }

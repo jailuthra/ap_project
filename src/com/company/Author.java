@@ -61,7 +61,7 @@ class Author implements Serializable {
     }
 
     public int getYearVal(int year) {
-        if (pubs_in_year.containsKey(year)) {
+        if (!pubs_in_year.containsKey(year)) {
             return 0;
         } else {
             return pubs_in_year.get(year);
@@ -69,8 +69,6 @@ class Author implements Serializable {
     }
 
     public int predict(int year) {
-        System.out.printf("Author: %s ", this);
-        System.out.println(pubs_in_year);
         ArrayList<Integer> keys = new ArrayList<Integer>(pubs_in_year.keySet());
         Collections.sort(keys);
         if (year - 1 > keys.get(keys.size() - 1)) {
