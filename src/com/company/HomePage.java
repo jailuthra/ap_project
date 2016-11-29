@@ -333,6 +333,20 @@ public class HomePage extends JFrame implements ActionListener {
     class q3 implements ActionListener{
         private int[] q3results;
 
+        private void updateTable(JTable table, String[] authors) {
+            if (q3results != null) {
+                for (int row = 0; row < 5; row++) {
+                    table.setValueAt(authors[row], row, 0);
+                    table.setValueAt(q3results[row], row, 1);
+                    table.setValueAt(q3results[5 + row], row, 2);
+                    float error = 0.0f;
+                    if (q3results[5 + row] != 0)
+                        error = (float) (q3results[row] - q3results[5 + row]) / (float) q3results[5 + row];
+                    table.setValueAt(error*100 + "%", row, 3);
+                }
+            }
+        }
+
         public q3(){
             next.setEnabled(false);
             q3tf1.setText("");
@@ -353,11 +367,17 @@ public class HomePage extends JFrame implements ActionListener {
             if("search".equals(actionEvent.getActionCommand())){
                 nextValue = 0;
                 q3input1 = q3tf1.getText();
-                q3input2 = q3tf2.getText();
-                q3input3 = q3tf3.getText();
-                q3input4 = q3tf4.getText();
-                q3input5 = q3tf5.getText();
-                q3input6 = q3tf6.getText();
+                String authors[] = new String [5];
+                authors[0] = q3input2 = q3tf2.getText();
+                authors[1] = q3input3 = q3tf3.getText();
+                authors[2] = q3input4 = q3tf4.getText();
+                authors[3] = q3input5 = q3tf5.getText();
+                authors[4] = q3input6 = q3tf6.getText();
+                System.out.println("Query 3: " + q3input1);
+                for (int i = 0; i < 5; i++) {
+                    System.out.print(authors[i] + ", ");
+                }
+                System.out.println();
                 if(q3input1.equals("") || q3input2.equals("") || q3input3.equals("") || q3input4.equals("") || q3input5.equals("") || q3input6.equals("")){
                     JOptionPane.showMessageDialog(null,"Input cannot be empty");
                     q3tf1.setText("");
@@ -371,17 +391,16 @@ public class HomePage extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null,"Enter numeric input");
                     q3tf1.setText("");
                 }
-                else if(!q3input1.matches("[0-9]+") || !q3input1.contains("[a-zA-Z]+") || !q3input1.matches("[0-9]+") || !q3input1.contains("[a-zA-Z]+") || !q3input1.matches("[0-9]+") || !q3input1.contains("[a-zA-Z]+") || !q3input1.matches("[0-9]+") || !q3input1.contains("[a-zA-Z]+") || !q3input1.matches("[0-9]+") || !q3input1.contains("[a-zA-Z]+")){
-                    JOptionPane.showMessageDialog(null,"Enter valid input");
-                    q3tf1.setText("");
-                    q3tf2.setText("");
-                    q3tf3.setText("");
-                    q3tf4.setText("");
-                    q3tf5.setText("");
-                    q3tf6.setText("");
-                }
                 else {
-                    //q3results = engine.query3(Integer.parseInt(q2input));
+                    q3results = engine.query3(authors, Integer.parseInt(q3input1));
+                    if (q3results != null) {
+                        System.out.println("Recieved results: " + 5);
+                        updateTable(q3dataset, authors);
+                        totalCount.setText("5");
+                    } else {
+                        System.out.println("Error in input years or author names");
+                        totalCount.setText("None");
+                    }
                 }
             }
             else if("reset".equals(actionEvent.getActionCommand())){

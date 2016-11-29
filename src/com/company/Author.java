@@ -83,7 +83,7 @@ class Author implements Serializable {
             }
         }
         int no_of_years = max_year - keys.get(0);
-        return (sum / no_of_years) * (year - max_year);
+        return (sum / no_of_years);
     }
 
     public String toString() {
