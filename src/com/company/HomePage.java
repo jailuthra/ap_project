@@ -503,7 +503,7 @@ public class HomePage extends JFrame implements ActionListener {
     @SuppressWarnings("unchecked")
     public void preparegui(){
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setSize(800,550);
+        setSize(1300,600);
         count = new JLabel("Total count of records: ");
         totalCount = new JTextField("",5);
         last = new JPanel();
@@ -530,14 +530,17 @@ public class HomePage extends JFrame implements ActionListener {
         DefaultTableModel model1 = new DefaultTableModel(numRows,q1colHeadings.length);
         model1.setColumnIdentifiers(q1colHeadings);
         q1dataset = new JTable(model1);
+        q1dataset.setPreferredScrollableViewportSize(new Dimension(900, 400));
         DefaultTableModel model2 = new DefaultTableModel(numRows,q2colHeadings.length);
         model2.setColumnIdentifiers(q2colHeadings);
         q2dataset = new JTable(model2);
+        q2dataset.setPreferredScrollableViewportSize(new Dimension(900, 400));
         DefaultTableModel model3 = new DefaultTableModel(numRows,q3colHeadings.length);
         model3.setColumnIdentifiers(q3colHeadings);
         q3dataset = new JTable(model3);
-        q1dataset.getColumnModel().getColumn(1).setPreferredWidth(250);
-        q1dataset.getColumnModel().getColumn(2).setPreferredWidth(250);
+        q3dataset.setPreferredScrollableViewportSize(new Dimension(900, 400));
+        q1dataset.getColumnModel().getColumn(1).setPreferredWidth(300);
+        q1dataset.getColumnModel().getColumn(2).setPreferredWidth(300);
         choiceBox.setActionCommand("choiceBox");
         choiceBox.addActionListener(this);
         first.add(choiceBox);
