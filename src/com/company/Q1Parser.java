@@ -1,5 +1,7 @@
 package com.company;
 
+/** @file Q1Parser.java */
+
 /**
  * \author Jai Luthra   2015043
  * \author Vasu Agarwal 2015113
@@ -12,7 +14,8 @@ import org.xml.sax.helpers.*;
 import java.util.*;
 import java.io.*;
 
-class Q1Parser extends DefaultHandler {
+/** @brief Query 1 Parser  */
+public class Q1Parser extends DefaultHandler {
     private String authorToSearch;
     private ArrayList<String> tags;
     private Set<String> relevant;
@@ -122,6 +125,11 @@ class Q1Parser extends DefaultHandler {
         }
 	}
 
+    /** Query1B handler.
+     * \param tags List of title tags to search publications
+     * \param authors HashMap of authors
+     * \return list of publications
+     */
     public static ArrayList<Publication>
         queryB(ArrayList<String> tags, HashMap<String, Author> authors)
     {
@@ -145,6 +153,11 @@ class Q1Parser extends DefaultHandler {
         }
     }
 
+    /** Query1A handler.
+     * \param author Author to search publications of
+     * \param authors HashMap of authors
+     * \return list of publications
+     */
     public static ArrayList<Publication>
         queryA(String author, HashMap<String, Author> authors)
     {

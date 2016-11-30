@@ -7,7 +7,8 @@ package com.company;
 
 import java.util.*;
 
-class Publication {
+/** @brief Publication class */
+public class Publication {
     public final String key;
     public final String type;
     public ArrayList<String> authors;
@@ -29,6 +30,10 @@ class Publication {
         this.authors = new ArrayList<>();
     }
 
+    /** Get similarity between a list of tags and this publication's title.
+     * \param tags ArrayList of title tags
+     * \return integer value denoting similarity
+     */
     public int getSimilarity(ArrayList<String> tags) {
         ArrayList<String> t = new ArrayList<>(Arrays.asList(title.split("\\s*(-|,|\\s)\\s*")));
         int out = 0;
@@ -42,6 +47,10 @@ class Publication {
         return out;
     }
 
+    /** Set relevance of publication wrt author name.
+     * \param content String read from xml file
+     * \param authorToSearch Search term (Author)
+     */
     public void setRelevance(String content, String authorToSearch) {
         if (content.equalsIgnoreCase(authorToSearch)) {
             this.relevance += 2;
@@ -55,6 +64,7 @@ class Publication {
         return relevance + " " + title + " " + year + " ";
     }
 
+    /** Filter an ArrayList of publications by start and end year. */
     public static ArrayList<Publication> filterYear(ArrayList<Publication> l1, int y1, int y2) {
         ArrayList<Publication> out = new ArrayList<>();
         for (Publication pub: l1) {
@@ -65,6 +75,7 @@ class Publication {
         return out;
     }
 
+    /** Filter an ArrayList of publications by since given year. */
     public static ArrayList<Publication> filterYear(ArrayList<Publication> l1, int y1) {
         ArrayList<Publication> out = new ArrayList<>();
         for (Publication pub: l1) {
@@ -75,11 +86,13 @@ class Publication {
         return out;
     }
 
+    /** Sort an ArrayList of publications by year (descending order). */
     public static ArrayList<Publication> sortByYear(ArrayList<Publication> l1) {
         Collections.sort(l1, new YearComparator());
         return l1;
     }
 
+    /** Sort an ArrayList of publications by relevance (descending order). */
     public static ArrayList<Publication> sortByRel(ArrayList<Publication> l1) {
         Collections.sort(l1, new RelevanceComparator());
         return l1;

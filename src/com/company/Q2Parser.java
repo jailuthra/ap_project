@@ -1,5 +1,7 @@
 package com.company;
 
+/** @file Q2Parser.java */
+
 /**
  * \author Jai Luthra   2015043
  * \author Vasu Agarwal 2015113
@@ -12,7 +14,8 @@ import org.xml.sax.helpers.*;
 import java.util.*;
 import java.io.*;
 
-class Q2Parser extends DefaultHandler {
+/** @brief Query 2 Parser  */
+public class Q2Parser extends DefaultHandler {
     private Publication pub = null;
     private HashMap<String, Author> authors;
 
@@ -48,7 +51,6 @@ class Q2Parser extends DefaultHandler {
         }
     }
 
-    /* TODO: Add Author object instead of String in publication */
     public void endElement(String uri, String localName,
                            String qName) throws SAXException {
         if (pub != null) {
@@ -105,6 +107,11 @@ class Q2Parser extends DefaultHandler {
         return ret;
     }
 
+    /** Query2 handler.
+     * \param k No. of publications
+     * \param authors HashMap of authors
+     * \return list of authors with more than k publications
+     */
     public static ArrayList<Author>
         query(int k, HashMap<String, Author> authors)
     {

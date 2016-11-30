@@ -1,5 +1,7 @@
 package com.company;
 
+/** @file Q3Parser.java */
+
 /**
  * \author Jai Luthra   2015043
  * \author Vasu Agarwal 2015113
@@ -12,7 +14,8 @@ import org.xml.sax.helpers.*;
 import java.util.*;
 import java.io.*;
 
-class Q3Parser extends DefaultHandler {
+/** @brief Query 3 Parser  */
+public class Q3Parser extends DefaultHandler {
     private Publication pub = null;
     private HashMap<String, Author> authorMap;
     private String[] authors;
@@ -109,6 +112,12 @@ class Q3Parser extends DefaultHandler {
         }
 	}
 
+    /** Query2 handler.
+     * \param author_names Array of author names to predict
+     * \param year Year to predict number of publications of
+     * \param authors HashMap of authors
+     * \return Array of 10 integers, first 5 are predictions, last 5 are actual values.
+     */
     public static int[] query(String[] author_names, int year,
             HashMap<String, Author> authorMap) {
         try {

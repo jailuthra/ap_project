@@ -8,11 +8,12 @@ package com.company;
 import java.util.*;
 import java.io.*;
 
-class Author implements Serializable {
+/** @brief Author class */ 
+public class Author implements Serializable {
     private String name;
     private String key;
     private Set<String> names;
-    public Map<Integer, Integer> pubs_in_year;
+    public Map<Integer, Integer> pubs_in_year; ///< Hash table Year : No of Publications
     public Set<Publication> pubs = new HashSet<>();
     public static boolean pubs_computed = false;
     private int nb_pubs;
@@ -24,6 +25,7 @@ class Author implements Serializable {
         this.nb_pubs = 0;
     }
 
+    /** Add a name to author object. */
     public void addName(String name) {
         if (this.name == null) {
             this.name = name;
@@ -31,12 +33,16 @@ class Author implements Serializable {
         this.names.add(name);
     }
 
+    /** Increment number of publications. */
     public void incrementPubs() {
         if (!pubs_computed) {
             nb_pubs += 1;
         }
     }
 
+    /** Check if number of publications is more than k.
+     * \param k number to check with
+     */
     public boolean pubsMoreThan(int k) {
         if (pubs_computed) {
             return (nb_pubs > k);
@@ -57,6 +63,9 @@ class Author implements Serializable {
         this.pubs.add(pub);
     }
 
+    /** Increment number of publications in given year.
+     * \param year Given year
+     */
     public void incrementPubYear(int year) {
         if (pubs_in_year.containsKey(year)) {
             pubs_in_year.put(year, pubs_in_year.get(year) + 1);
@@ -65,6 +74,9 @@ class Author implements Serializable {
         }
     }
 
+    /** Get number of publications of given year.
+     * \param year Given year
+     */
     public int getYearVal(int year) {
         if (!pubs_in_year.containsKey(year)) {
             return 0;
@@ -73,6 +85,9 @@ class Author implements Serializable {
         }
     }
 
+    /** Predict number of publications for given year.
+     * \param year Given year
+     */
     public int predict(int year) {
         ArrayList<Integer> keys = new ArrayList<Integer>(pubs_in_year.keySet());
         Collections.sort(keys);

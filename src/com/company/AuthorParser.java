@@ -1,4 +1,5 @@
 package com.company;
+/** @file AuthorParser.java */
 
 /**
  * \author Jai Luthra   2015043
@@ -12,7 +13,8 @@ import org.xml.sax.helpers.*;
 import java.util.*;
 import java.io.*;
 
-class AuthorParser extends DefaultHandler {
+/** @brief Author (<www> tags) Parser  */
+public class AuthorParser extends DefaultHandler {
     private StringBuilder contentBuf = new StringBuilder();
     private boolean bufupdate;
     private String content;
